@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+import argparse
+from rnaseqpipeline.Install import Install
+
+
+def arguments():
+    p = argparse.ArgumentParser(formatter_class = argparse.RawTextHelpFormatter)
+
+    subparsers = p.add_subparsers(dest = 'command', help = 'Sub commands for the pipeline')
+    subparsers.required = True
+
+    installation_parser = subparsers.add_parser("install",
+                            help = "Pipeline installation options",
+                            formatter_class = argparse.RawTextHelpFormatter)
+    installation_sub_parser = installation_parser.add_subparsers(dest = 'install_sub',
+                                help = 'Installation options')
+
+    install_check_parser = installation_sub_parser.add_parser('check',
+                                                help = 'Verify the installation of the full pipeline')
+    installation_parser.set_defaults(func=Install.verify_installation)
+
+    install_pipeline_parser = installation_sub_parser.add_parser('install_pipeline',
+                                                help = 'Install the pipeline for the current user')
+
+
+    install_pipeline_parser.add_argument("--dir", dest = 'install_dir',
+                                         help = "Installation directory",
+                                         required = True)
+                                         
+    install_pipeline_parser.set_defaults(func = Install.perform_installation)
+
+    return p.parse_args()
+
+
+
+if __name__ == "__main__":
+    options = arguments()
+    options.func(options)
+
