@@ -6,5 +6,5 @@ setup(
         version = "0.1",
         description = 'WUR nematology rnaseq pipeline',
         packages = ['rnaseqpipeline'],
-        scripts = ['rnaseqpipeline/rnaseqpipeline']
+        scripts = ['scripts/rnaseqpipeline']
         )
