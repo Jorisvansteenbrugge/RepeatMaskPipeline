@@ -20,7 +20,7 @@ def arguments():
                                                 help = 'Verify the installation of the full pipeline')
     installation_parser.set_defaults(func=Install.verify_installation)
 
-    install_pipeline_parser = installation_sub_parser.add_parser('install_pipeline',
+    install_pipeline_parser = installation_sub_parser.add_parser('pipeline',
                                                 help = 'Install the pipeline for the current user')
 
 
