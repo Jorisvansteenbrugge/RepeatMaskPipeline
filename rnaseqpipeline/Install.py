@@ -15,7 +15,7 @@ class Install():
         return ret_val
 
 
-    def perform_installation(options):
+    def perform_installation(self, options):
         import subprocess as sp
         import os
 
@@ -28,7 +28,7 @@ class Install():
 
             def RECON():
                 # Check first if already installed
-                if verify_RECON():
+                if self.verify_RECON():
                     return
 
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
