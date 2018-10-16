@@ -105,12 +105,12 @@ class Install():
             #RepeatMasker()
         RepeatModeler(options)
 
-        def verify_RECON():
-            ret_val = True
-            import subprocess as sp
-            try:
-                sp.check_call('edgeredef', shell = True)
-            except sp.CalledProcessError:
-                ret_val = False
+    def verify_RECON():
+        ret_val = True
+        import subprocess as sp
+        try:
+            sp.check_call('edgeredef', shell = True)
+        except sp.CalledProcessError:
+            ret_val = False
 
-            return ret_val
+        return ret_val
