@@ -19,7 +19,7 @@ class Install():
             sp.call(download_cmd, shell=True)
 
             # Building
-            sp.call('cd RECON-1.08/src; make; make install', shell = True)
+            sp.call('cd {}/RECON-1.08/src; make; make install'.format(options.install_dir), shell = True)
             # Modify the REcon scrip to use the right paths
             sed_cmd = "sed -i 's+$path = \"\";+$path = {0}/RECON-1.08/bin+g' {0}/RECON-1.08/scripts/recon.pl".format(
             options.install_dir
@@ -54,6 +54,7 @@ class Install():
             sp.call(conda_channel.format('WURnematology'),
             shell = True)
             sp.call("conda install -y tandemrepeatfinder", shell = True)
+
         def RMBlast():
             print('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix = {0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
             options.install_dir
