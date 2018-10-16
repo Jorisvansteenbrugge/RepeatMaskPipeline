@@ -7,8 +7,8 @@ class Install():
         import subprocess as sp
         print('Performing installation in {} '.format(options.install_dir))
 
-    def RepeatModeler(options):
-        print("Installing RepeatModeler")
+        def RepeatModeler(options):
+            print("Installing RepeatModeler")
 
         def RECON(options):
             recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
@@ -25,7 +25,7 @@ class Install():
             options.install_dir
             )
             sp.call(sed_cmd, shell=True)
-			# Cleanup
+                # Cleanup
             sp.call('rm {}/recon.tar.gz'.format(options.install_dir), shell=True)
 
         def RepeatScout():
@@ -83,4 +83,4 @@ class Install():
         TandenRepeatFinder()
         RMBlast()
         RepeatMasker()
-    RepeatModeler(options)
+        RepeatModeler(options)
