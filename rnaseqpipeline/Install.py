@@ -28,7 +28,7 @@ class Install():
 
             def RECON():
                 # Check first if already installed
-                if self.verify_RECON():
+                if verify_RECON():
                     return
 
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
