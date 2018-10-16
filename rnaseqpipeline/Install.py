@@ -25,7 +25,7 @@ class Install():
             options.install_dir
             )
             sp.call(sed_cmd, shell=True)
-                                                                                                                                                                                                                                                    # Cleanup
+			# Cleanup
             sp.call('rm {}/recon.tar.gz'.format(options.install_dir), shell=True)
 
         def RepeatScout():
@@ -78,7 +78,7 @@ class Install():
             ), shell = True)
             sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir), shell = True)
             sp.call('cd RepeatMasker; ./configure --prefix=$(pwd)', shell = True)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            RECON()
+        RECON()
         RepeatScout()
         TandenRepeatFinder()
         RMBlast()
