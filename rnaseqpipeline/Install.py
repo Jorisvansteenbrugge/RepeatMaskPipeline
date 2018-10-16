@@ -83,4 +83,4 @@ class Install():
         TandenRepeatFinder()
         RMBlast()
         RepeatMasker()
-    RepeatModeler()
+    RepeatModeler(options)
