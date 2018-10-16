@@ -24,7 +24,7 @@ class Install():
                 # Check first if already installed
                 if verify_RECON():
                     return
-                print ("Installing RECON...")
+                print ("    Installing RECON...")
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
                 download_cmd = 'wget {0} -O {1}/recon.tar.gz; cd {1}; tar xf recon.tar.gz;'.format(
                 recon_url, options.install_dir
@@ -117,7 +117,7 @@ def verify_RECON():
     try:
         out, err = sp.Popen('edgeredef', stdout = sp.PIPE, stderr = sp.PIPE).communicate()
         if b'usage' in out: # This check is only to be safe, it will not reach the else
-            print('Skipping RECON (already installed)...')
+            print('    Skipping RECON (already installed)...')
             return True
         else:
             return False
