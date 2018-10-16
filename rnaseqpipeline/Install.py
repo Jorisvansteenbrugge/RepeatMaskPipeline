@@ -53,14 +53,14 @@ class Install():
             shell = True)
             sp.call(conda_channel.format('WURnematology'),
             shell = True)
-			sp.call("conda install -y tandemrepeatfinder", shell = True)
-		def RMBlast():
-			print('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix = {0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
+            sp.call("conda install -y tandemrepeatfinder", shell = True)
+        def RMBlast():
+            print('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix = {0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
             options.install_dir
             ))
             cmd = "wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
             options.install_dir)
-			sp.call(cmd, shell = True)
+            sp.call(cmd, shell = True)
             sp.call('tar xf ncbi-blast.tar.gz', shell = True)
             sp.call('wget http://www.repeatmasker.org/isb-2.6.0+-changes-vers2.patch.gz -O {}/isb-2.6.0+-changes-vers2.patch.gz'.format(
             options.install_dir), shell = True)
@@ -68,12 +68,12 @@ class Install():
             shell = True)
             sp.call("cd {}/ncbi-blast-2.6.0+-src ; patch -p1 < ../isb-2.6.0+-changes-vers2.patch".format(options.install_dir),
             shell = True)
-			sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
+            sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
             options.install_dir
             ), shell = True)
-			sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir), shell = True)
-		def RepeatMasker():
-			sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
+            sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir), shell = True)
+        def RepeatMasker():
+            sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
             options.install_dir
             ), shell = True)
             sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir), shell = True)
