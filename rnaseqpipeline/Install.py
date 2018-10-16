@@ -114,9 +114,10 @@ class Install():
 def verify_RECON():
     ret_val = True
     import subprocess as sp
-    try:
-        sp.check_call('edgeredef', shell = True)
-    except sp.CalledProcessError:
-        ret_val = False
 
-    return ret_val
+    ret_code = sp.Popen('edgeredef', stdout = sp.PIPE).poll()
+    print("RET CODE")
+    print(ret_code)
+
+    return True
+    #return ret_val
