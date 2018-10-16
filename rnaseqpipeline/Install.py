@@ -115,7 +115,9 @@ def verify_RECON():
     ret_val = True
     import subprocess as sp
 
-    ret_code = sp.Popen('edgeredef', stdout = sp.PIPE).poll()
+    ret = sp.Popen('edgeredef', stdout = sp.PIPE)
+    ret_code = ret.poll()
+
     print("RET CODE")
     print(ret_code)
 
