@@ -117,6 +117,8 @@ def verify_RECON():
 
 
     ret = sp.Popen('edgeredef', stdout = sp.PIPE).communicate()
-    print(str(ret))
+    if 'usage' in ret:
+        print('yes boy')
+        return True
     return True
     #return ret_val
