@@ -1,21 +1,15 @@
+
+
 class Install():
 
     def verify_installation(options):
         print('veryifying install')
 
 
-    def verify_RECON():
-        ret_val = True
-        import subprocess as sp
-        try:
-            sp.check_call('edgeredef', shell = True)
-        except sp.CalledProcessError:
-            ret_val = False
-
-        return ret_val
 
 
-    def perform_installation(self, options):
+
+    def perform_installation(options):
         import subprocess as sp
         import os
 
@@ -28,7 +22,7 @@ class Install():
 
             def RECON():
                 # Check first if already installed
-                if self.verify_RECON():
+                if verify_RECON():
                     return
 
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
@@ -116,3 +110,13 @@ class Install():
             #RMBlast()
             #RepeatMasker()
         RepeatModeler(options)
+
+def verify_RECON():
+    ret_val = True
+    import subprocess as sp
+    try:
+        sp.check_call('edgeredef', shell = True)
+    except sp.CalledProcessError:
+        ret_val = False
+
+    return ret_val
