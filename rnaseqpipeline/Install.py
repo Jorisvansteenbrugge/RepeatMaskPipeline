@@ -117,6 +117,6 @@ def verify_RECON():
 
 
     ret = sp.Popen('edgeredef', stdout = sp.PIPE).communicate()
-    print re
+    print ret
     return True
     #return ret_val
