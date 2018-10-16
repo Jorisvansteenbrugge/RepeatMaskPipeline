@@ -116,8 +116,8 @@ def verify_RECON():
     import subprocess as sp
 
 
-    ret = sp.Popen('edgeredef', stdout = sp.PIPE).communicate()
-    if 'usage' in ret[0]:
+    out, err = sp.Popen('edgeredef', stdout = sp.PIPE, stderr = sp.PIPE).communicate()
+    if 'usage' in out:
         print('yes boy')
         return True
     return True
