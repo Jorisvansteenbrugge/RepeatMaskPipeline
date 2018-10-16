@@ -114,9 +114,12 @@ class Install():
 def verify_RECON():
     import subprocess as sp
 
-    out, err = sp.Popen('edgeredef', stdout = sp.PIPE, stderr = sp.PIPE).communicate()
-    if b'usage' in out:
-        print('Skipping RECON (already installed)...')
-        return True
-    else:
+    try:
+        out, err = sp.Popen('edgeredef', stdout = sp.PIPE, stderr = sp.PIPE).communicate()
+        if b'usage' in out: # This check is only to be safe, it will not reach the else
+            print('Skipping RECON (already installed)...')
+            return True
+        else:
+            return False
+    except FileNotFoundError:
         return False
