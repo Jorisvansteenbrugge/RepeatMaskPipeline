@@ -130,9 +130,11 @@ class Install():
 
 
             def RepeatMasker():
+
+                print("    Installing RepeatMasker")
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
-                        shell = True, stdout=FNULL)
+                        shell = True, stdout=FNULL, stderr = FNULL)
                 sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
                         shell = True, stdout=FNULL)
 
@@ -142,10 +144,10 @@ class Install():
                 # Download that now:
                 sp.call(["wget", "http://www.bioinformatics.nl/~steen176/repeatmask_config", # Rreplace with actual URL
                 "-O", "{}/RepeatMasker_CONFIG".format(options.install_dir)
-                        ])
+                        ], stdout = FNULL)
 
                 # Now we need to update all the paths required relative to the installation directory
-                repeat_mask_cmd = "sed -i \'s+ACTUALINSTALLDIR+{}+g\'  {}".format(
+                repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatMasker_CONFIG".format(
                     options.install_dir
                 )
                 sp.call(repeat_mask_cmd, shell = True)
