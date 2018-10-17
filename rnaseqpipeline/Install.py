@@ -96,13 +96,11 @@ class Install():
             def RMBlast():
 
                 path_check = verify_installation('blastp', 'BLAST query/options error')
-                print("path check ")
-                print(path_check)
                 install_check = verify_installation("which blastp", options.install_dir)
-                print('install_location')
-                print(install_check)
+
                 if path_check and install_check:
                     print("    Skipping RMBlast (already installed)")
+                    return
 
                 cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
                     options.install_dir)
