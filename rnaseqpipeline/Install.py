@@ -77,6 +77,10 @@ class Install():
                     shell = True, stdout = FNULL)
 
             def TandenRepeatFinder():
+                if verify_installation('trf409.linux64', 'Please use:'):
+                    print('    Skipping TandemRepeatFinder (already installed)')
+                    return
+
                 conda_channel = "conda config --add channels {}"
                 sp.call(conda_channel.format('bioconda'),
                         shell = True, stdout=FNULL)
@@ -118,7 +122,7 @@ class Install():
 
             RECON()
             RepeatScout()
-            #TandenRepeatFinder()
+            TandenRepeatFinder()
             #RMBlast()
             #RepeatMasker()
         RepeatModeler(options)
