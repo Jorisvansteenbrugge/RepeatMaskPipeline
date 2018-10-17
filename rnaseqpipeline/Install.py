@@ -114,9 +114,9 @@ class Install():
                     shell = True, stdout=FNULL)
                 sp.call("cd {}/ncbi-blast-2.6.0+-src ; patch -p1 < ../isb-2.6.0+-changes-vers2.patch".format(options.install_dir),
                     shell = True, stdout=FNULL)
-                sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
-                options.install_dir),
-                        shell = True, stdout=FNULL)
+                #sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
+                #   options.install_dir),
+                #        shell = True, stdout=FNULL)
                 print("        compiling ncbi blast (this takes at least an hour)")
                 #sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir),
                 #        shell = True, stdout=FNULL, stderr = FNULL)
