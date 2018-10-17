@@ -139,8 +139,8 @@ class Install():
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
                         shell = True, stdout=FNULL, stderr = FNULL)
-                #sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
-                #        shell = True, stdout=FNULL)
+                sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
+                        shell = True, stdout=FNULL)
 
                 # By default, the configure script requires manual input for different configuration steps,
                 # This is annoying in a headless installation (such as this one) therefore I modified the original
@@ -175,7 +175,7 @@ class Install():
                 if verify_installation('nseg', "Usage:"):
                     print("    Skipping NSEG (Already installed)")
                     return
-                    
+
                 sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
                     shell = True)
                 sp.call("cd {}/nseg; make".format(options.install_dir), shell = True)
@@ -191,6 +191,31 @@ class Install():
             RepeatMasker()
             NSEG()
 
+
+            # Actual RepeatModeler installation
+            # Download the RELEASE
+            sp.call("wget -c http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-1.0.11.tar.gz -O {}/RepeatModeler-open-1.0.11.tar.gz".format(options.install_dir),
+                shell = True, stdout = FNULL)
+
+            sp.call('cd {}; tar xf RepeatModeler-open-1.0.11.tar.gz'.format(options.install_dir),
+                    shell = True, stdout = FNULL)
+
+            # By default, the configure script requires manual input for different configuration steps,
+            # This is annoying in a headless installation (such as this one) therefore I modified the original
+            # one so it doesn't require the manual input.
+            # Download that now:
+            sp.call(["wget", "http://www.bioinformatics.nl/~steen176/repeatmodeler_config", # Rreplace with actual URL
+            "-O", "{}/RepeatModeler_CONFIG".format(options.install_dir)
+                    ], stdout = FNULL)
+
+            # Now we need to update all the paths required relative to the installation directory
+            repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatModler_CONFIG".format(
+                options.install_dir
+            )
+            sp.call(repeat_mask_cmd, shell = True)
+
+            sp.call('cd {}/RepeatModeler-open-1.0.11;cp ../RepeatMasker_CONFIG ./configure; perl configure '.format(options.install_dir),
+                    shell = True)
         RepeatModeler(options)
 
 def verify_installation(command, required_out):
