@@ -135,8 +135,23 @@ class Install():
                         shell = True, stdout=FNULL)
                 sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
                         shell = True, stdout=FNULL)
-                sp.call('cd RepeatMasker; ./configure --prefix=$(pwd)',
-                        shell = True, stdout=FNULL)
+
+                # By default, the configure script requires manual input for different configuration steps,
+                # This is annoying in a headless installation (such as this one) therefore I modified the original
+                # one so it doesn't require the manual input.
+                # Download that now:
+                sp.call(["wget", "http://www.bioinformatics.nl/~steen176/repeatmask_config", # Rreplace with actual URL
+                "-O", "{}/RepeatMasker_CONFIG".format(options.install_dir)
+                        ])
+
+                # Now we need to update all the paths required relative to the installation directory
+                repeat_mask_cmd = "sed -i \'s+ACTUALINSTALLDIR+{}+g\'  {}".format(
+                    options.install_dir
+                )
+                sp.call(repeat_mask_cmd, shell = True)
+
+                sp.call('cd {}/RepeatMasker; perl configure '.format(options.install_dir),
+                        shell = True)
 
             RECON()
             RepeatScout()
