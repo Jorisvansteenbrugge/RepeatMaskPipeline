@@ -172,7 +172,7 @@ class Install():
                 sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'", shell = True)
 
             def NSEG():
-                sp.call("mkdir {}/nseg; cd {}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
+                sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
                     shell = True)
 
             RECON()
