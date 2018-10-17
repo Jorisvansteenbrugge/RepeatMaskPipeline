@@ -123,7 +123,7 @@ class Install():
 
                 path = "{0}/ncbi-blast-2.6.0+-src/bin".format(options.install_dir)
 
-                sp.call("echo \'# RMBlast installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}\' >> ~/.bashrc".format(
+                sp.call("echo \'# RMBlast installation dir\' >> ~/.bashrc; echo \'export PATH={}:$PATH\' >> ~/.bashrc".format(
                     path
                 ), shell = True)
 
