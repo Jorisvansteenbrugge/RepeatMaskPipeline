@@ -101,13 +101,13 @@ class Install():
                 if path_check and install_check:
                     print("    Skipping RMBlast (already installed)")
 
-                cmd = "wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
+                cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
                     options.install_dir)
                 sp.call(cmd,
                     shell = True, stdout=FNULL)
                 sp.call('tar xf ncbi-blast.tar.gz',
                     shell = True, stdout=FNULL)
-                sp.call('wget http://www.repeatmasker.org/isb-2.6.0+-changes-vers2.patch.gz -O {}/isb-2.6.0+-changes-vers2.patch.gz'.format(
+                sp.call('wget -c http://www.repeatmasker.org/isb-2.6.0+-changes-vers2.patch.gz -O {}/isb-2.6.0+-changes-vers2.patch.gz'.format(
                 options.install_dir),
                     shell = True, stdout=FNULL)
                 sp.call('gunzip {}/isb-2.6.0+-changes-vers2.patch.gz'.format(options.install_dir),
