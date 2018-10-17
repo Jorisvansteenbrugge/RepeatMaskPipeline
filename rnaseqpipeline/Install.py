@@ -140,7 +140,7 @@ class Install():
             RECON()
             RepeatScout()
             TandenRepeatFinder()
-            #RMBlast()
+            RMBlast()
             #RepeatMasker()
         RepeatModeler(options)
 
