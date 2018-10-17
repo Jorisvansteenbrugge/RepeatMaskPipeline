@@ -152,7 +152,7 @@ class Install():
                 )
                 sp.call(repeat_mask_cmd, shell = True)
 
-                sp.call('cd {}/RepeatMasker; perl configure '.format(options.install_dir),
+                sp.call('cd {}/RepeatMasker;cp ../RepeatMasker_CONFIG ./configure; perl configure '.format(options.install_dir),
                         shell = True)
 
             RECON()
