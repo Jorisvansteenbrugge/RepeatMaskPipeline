@@ -22,7 +22,7 @@ class Install():
 
             def RECON():
                 # Check first if already installed
-                if verify_installation('edgeredef'):
+                if verify_installation('edgeredef', 'usage'):
                     print('    Skipping RECON (already installed)...')
                     return
 
@@ -50,7 +50,7 @@ class Install():
                     stdout = FNULL)
 
             def RepeatScout():
-                if verify_installation('build_lmer_table'):
+                if verify_installation('build_lmer_table', "Usage"):
                     print('    Skipping RepeatScout (already installed)...')
                     return
 
@@ -123,12 +123,13 @@ class Install():
             #RepeatMasker()
         RepeatModeler(options)
 
-def verify_installation(command):
+def verify_installation(command, required_out):
     import subprocess as sp
 
+    required_out = required_out.encode()
     try:
         out, err = sp.Popen(command, stdout = sp.PIPE, stderr = sp.PIPE).communicate()
-        if b'usage' in out: # This check is only to be safe, it will not reach the else
+        if required_out in out or required_out in err: # This check is only to be safe, it will not reach the else
             return True
         else:
             return False
