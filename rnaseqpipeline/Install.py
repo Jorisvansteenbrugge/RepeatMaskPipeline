@@ -130,11 +130,11 @@ class Install():
 
 
             def RepeatMasker():
-                if verify_installation('RepeatMasker', 'RepeatMasker version')
+                if verify_installation('RepeatMasker', 'RepeatMasker version'):
                     print("    Skipping RepeatMasker (Already installed)")
                     return
 
-                    
+
                 print("    Installing RepeatMasker")
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
