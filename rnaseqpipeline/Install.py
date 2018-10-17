@@ -23,7 +23,7 @@ class Install():
             def RECON():
                 # Check first if already installed
                 if verify_installation('edgeredef'):
-                    print('    Skipping RECON (already installed)...'))
+                    print('    Skipping RECON (already installed)...')
                     return
 
                 print ("    Installing RECON...")
