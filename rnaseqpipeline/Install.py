@@ -96,8 +96,11 @@ class Install():
             def RMBlast():
 
                 path_check = verify_installation('blastp', 'BLAST query/options error')
+                print("path check ")
+                print(path_check)
                 install_check = verify_installation("which blastp", options.install_dir)
-
+                print('install_location')
+                print(install_check)
                 if path_check and install_check:
                     print("    Skipping RMBlast (already installed)")
 
