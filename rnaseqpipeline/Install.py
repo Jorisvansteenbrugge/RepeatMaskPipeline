@@ -172,6 +172,10 @@ class Install():
                 sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'", shell = True)
 
             def NSEG():
+                if verify_installation('nseg', "Usage:"):
+                    print("    Skipping NSEG (Already installed)")
+                    return
+                    
                 sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
                     shell = True)
                 sp.call("cd {}/nseg; make".format(options.install_dir), shell = True)
