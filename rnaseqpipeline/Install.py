@@ -135,8 +135,8 @@ class Install():
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
                         shell = True, stdout=FNULL, stderr = FNULL)
-                sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
-                        shell = True, stdout=FNULL)
+                #sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
+                #        shell = True, stdout=FNULL)
 
                 # By default, the configure script requires manual input for different configuration steps,
                 # This is annoying in a headless installation (such as this one) therefore I modified the original
