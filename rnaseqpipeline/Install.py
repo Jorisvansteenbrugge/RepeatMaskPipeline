@@ -155,6 +155,15 @@ class Install():
                 sp.call('cd {}/RepeatMasker;cp ../RepeatMasker_CONFIG ./configure; perl configure '.format(options.install_dir),
                         shell = True)
 
+                sp.call("echo \'# RepeatMasker install dir\' >> ~/.bashrc ; echo \'export PATH={}/RepeatMasker:$PATH\' >> ~/.bashrc",
+                    shell = True)
+
+
+                sp.call("wget -O- http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib", shell = True)
+                sp.call("eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`", shell = True)
+                sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'", shell = True)
+
             RECON()
             RepeatScout()
             TandenRepeatFinder()
