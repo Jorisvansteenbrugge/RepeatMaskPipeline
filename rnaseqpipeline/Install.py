@@ -49,20 +49,24 @@ class Install():
 
             def RepeatScout():
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
-                download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
-                recon_url, options.install_dir
+                    download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
+                    recon_url, options.install_dir
                 )
                 # Download and extract
-                sp.call(download_cmd, shell=True, stdout=FNULL)
+                sp.call(download_cmd,
+                    shell = True, stdout = FNULL)
                 # Building
                 sp.call('cd {}/RepeatScout-1/ ; make'.format(options.install_dir),
-                shell = True, stdout=FNULL)
+                    shell = True, stdout = FNULL)
 
                 # Cleanup
                 sp.call('rm {}/RepeatScout.tar.gz'.format(options.install_dir),
-                shell=True, stdout=FNULL)
-                bashrc = "echo export PATH=$PATH:{}/RepeatScout-1/ >> ~/.bashrc".format(options.install_dir)
-                sp.call(bashrc, shell = True, stdout=FNULL)
+                    shell=True, stdout = FNULL)
+
+                bashrc = "echo \'export PATH=$PATH:{}/RepeatScout-1/ \' >> ~/.bashrc".format(options.install_dir)
+
+                sp.call(bashrc,
+                    shell = True, stdout = FNULL)
 
             def TandenRepeatFinder():
                 conda_channel = "conda config --add channels {}"
@@ -105,7 +109,7 @@ class Install():
                         shell = True, stdout=FNULL)
 
             RECON()
-            #RepeatScout()
+            RepeatScout()
             #TandenRepeatFinder()
             #RMBlast()
             #RepeatMasker()
