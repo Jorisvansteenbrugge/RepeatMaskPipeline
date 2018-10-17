@@ -175,7 +175,9 @@ class Install():
                 sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
                     shell = True)
                 sp.call("cd {}/nseg; make".format(options.install_dir), shell = True)
-                sp.call("echo \'# NSEG installation dir\' >> ~/.bashrc; echo \'export PATH={}/nseg:$PATH\' >> ~/.bashrc",
+                sp.call("echo \'# NSEG installation dir\' >> ~/.bashrc; echo \'export PATH={}/nseg:$PATH\' >> ~/.bashrc".format(
+                    options.install_dir
+                ),
                     shell = True)
 
             RECON()
