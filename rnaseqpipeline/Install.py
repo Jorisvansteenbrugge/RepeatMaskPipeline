@@ -49,7 +49,7 @@ class Install():
 
             def RepeatScout():
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
-                    download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
+                download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
                     recon_url, options.install_dir
                 )
                 # Download and extract
