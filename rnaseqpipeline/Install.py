@@ -51,9 +51,9 @@ class Install():
 
             def RepeatScout():
                 if verify_installation('build_lmer_table'):
-                    print('    Skipping RepeatScout (already installed)...'))
+                    print('    Skipping RepeatScout (already installed)...')
                     return
-                    
+
                 print("    Installing RepeatScout")
 
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
