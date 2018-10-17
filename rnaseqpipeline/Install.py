@@ -22,8 +22,10 @@ class Install():
 
             def RECON():
                 # Check first if already installed
-                if verify_RECON():
+                if verify_installation('edgeredef'):
+                    print('    Skipping RECON (already installed)...'))
                     return
+
                 print ("    Installing RECON...")
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
                 download_cmd = 'wget {0} -O {1}/recon.tar.gz; cd {1}; tar xf recon.tar.gz;'.format(
@@ -48,13 +50,19 @@ class Install():
                     stdout = FNULL)
 
             def RepeatScout():
+                if verify_installation('build_lmer_table'):
+                    print('    Skipping RepeatScout (already installed)...'))
+                    return
+                    
+                print("    Installing RepeatScout")
+
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
                 download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
                     recon_url, options.install_dir
                 )
                 # Download and extract
                 sp.call(download_cmd,
-                    shell = True, stdout = FNULL)
+                    shell = True, stdout = FNULL, stderr = FNULL)
                 # Building
                 sp.call('cd {}/RepeatScout-1/ ; make'.format(options.install_dir),
                     shell = True, stdout = FNULL)
@@ -63,7 +71,7 @@ class Install():
                 sp.call('rm {}/RepeatScout.tar.gz'.format(options.install_dir),
                     shell=True, stdout = FNULL)
 
-                bashrc = "echo \'export PATH=$PATH:{}/RepeatScout-1/ \' >> ~/.bashrc".format(options.install_dir)
+                bashrc = "echo \'# RepeatScout 1.0.5 installation dir\'; echo \'export PATH=$PATH:{}/RepeatScout-1/ \' >> ~/.bashrc".format(options.install_dir)
 
                 sp.call(bashrc,
                     shell = True, stdout = FNULL)
@@ -115,13 +123,12 @@ class Install():
             #RepeatMasker()
         RepeatModeler(options)
 
-def verify_RECON():
+def verify_installation(command):
     import subprocess as sp
 
     try:
-        out, err = sp.Popen('edgeredef', stdout = sp.PIPE, stderr = sp.PIPE).communicate()
+        out, err = sp.Popen(command, stdout = sp.PIPE, stderr = sp.PIPE).communicate()
         if b'usage' in out: # This check is only to be safe, it will not reach the else
-            print('    Skipping RECON (already installed)...')
             return True
         else:
             return False
