@@ -169,12 +169,19 @@ class Install():
                 sp.call("eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`", shell = True)
                 sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc", shell = True)
                 sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'", shell = True)
+
+            def NSEG():
+                sp.call("mkdir {}/nseg; cd {}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
+                    shell = True)
 
             RECON()
             RepeatScout()
             TandenRepeatFinder()
             RMBlast()
             RepeatMasker()
+            NSEG()
+
         RepeatModeler(options)
 
 def verify_installation(command, required_out):
