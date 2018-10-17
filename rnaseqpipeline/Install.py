@@ -91,7 +91,15 @@ class Install():
                 sp.call("conda install -y tandemrepeatfinder",
                         shell = True, stdout=FNULL)
 
+                print("    TendemRepeatFinder installation complete")
+
             def RMBlast():
+
+                path_check = verify_installation('blastp', 'BLAST query/options error')
+                install_check = verify_installation("which blastp", options.install_dir)
+
+                if path_check and install_check:
+                    print("    Skipping RMBlast (already installed)")
 
                 cmd = "wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
                     options.install_dir)
@@ -109,8 +117,17 @@ class Install():
                 sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
                 options.install_dir),
                         shell = True, stdout=FNULL)
-                sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir),
-                        shell = True, stdout=FNULL)
+                print("        compiling ncbi blast (this takes at least an hour)")
+                #sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir),
+                #        shell = True, stdout=FNULL, stderr = FNULL)
+
+                path = "{0}/ncbi-blast-2.6.0+-src/bin".format(options.install_dir)
+
+                sp.call("echo \'# RMBlast installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}\' >> ~/.bashrc".format(
+                    path
+                ), shell = True)
+
+
             def RepeatMasker():
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
@@ -132,7 +149,7 @@ def verify_installation(command, required_out):
 
     required_out = required_out.encode()
     try:
-        out, err = sp.Popen(command, stdout = sp.PIPE, stderr = sp.PIPE).communicate()
+        out, err = sp.Popen(command, stdout = sp.PIPE, stderr = sp.PIPE, shell = True).communicate()
         if required_out in out or required_out in err: # This check is only to be safe, it will not reach the else
             return True
         else:
