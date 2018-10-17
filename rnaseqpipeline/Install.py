@@ -209,7 +209,7 @@ class Install():
                     ], stdout = FNULL)
 
             # Now we need to update all the paths required relative to the installation directory
-            repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatModler_CONFIG".format(
+            repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatModeler_CONFIG".format(
                 options.install_dir
             )
             sp.call(repeat_mask_cmd, shell = True)
