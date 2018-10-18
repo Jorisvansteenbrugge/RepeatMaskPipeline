@@ -220,7 +220,8 @@ class Install():
             sp.call('cd {}/RepeatModeler-open-1.0.11;cp ../RepeatModeler_CONFIG RepModelConfig.pm'.format(options.install_dir),
                     shell = True)
 
-            sp.call('sed -i "s,#!/usr/bin/perl,$(which perl),g" {}/RepeatModeler-open-1.0.11/RepModelConfig.pm') # replace the perl shebang line
+            sp.call('sed -i "s,#!/usr/bin/perl,$(which perl),g" {}/RepeatModeler-open-1.0.11/RepModelConfig.pm'.format(options.install_dir),
+                    shell = True) # replace the perl shebang line
 
             sp.call("echo \'# RepeatModeler installation dir\' >> ~/.bashrc; echo \'export PATH={}/RepeatModeler-open-1.0.11:$PATH\' >> ~/.bashrc".format(
                 options.install_dir
