@@ -189,7 +189,7 @@ class Install():
             TandenRepeatFinder()
             RMBlast()
             RepeatMasker()
-            #NSEG()
+            NSEG()
 
 
             # Actual RepeatModeler installation
