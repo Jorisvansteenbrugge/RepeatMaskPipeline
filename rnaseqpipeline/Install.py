@@ -18,15 +18,15 @@ class Install():
         FNULL = open(os.devnull, 'w')
 
         def RepeatModeler(options):
-            print("Installing RepeatModeler")
+            print_pass("Installing RepeatModeler")
 
             def RECON():
                 # Check first if already installed
                 if verify_installation('edgeredef', 'usage'):
-                    print('    Skipping RECON (already installed)...')
+                    print_pass('    Skipping RECON (already installed)...')
                     return
 
-                print ("    Installing RECON...")
+                print_pass("    Installing RECON...")
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
                 download_cmd = 'wget {0} -O {1}/recon.tar.gz; cd {1}; tar xf recon.tar.gz;'.format(
                 recon_url, options.install_dir
@@ -51,10 +51,10 @@ class Install():
 
             def RepeatScout():
                 if verify_installation('build_lmer_table', "Usage"):
-                    print('    Skipping RepeatScout (already installed)...')
+                    print_pass('    Skipping RepeatScout (already installed)...')
                     return
 
-                print("    Installing RepeatScout")
+                print_pass("    Installing RepeatScout")
 
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
                 download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
@@ -78,7 +78,7 @@ class Install():
 
             def TandenRepeatFinder():
                 if verify_installation('trf409.linux64', 'Please use:'):
-                    print('    Skipping TandemRepeatFinder (already installed)')
+                    print_pass('    Skipping TandemRepeatFinder (already installed)')
                     return
 
                 conda_channel = "conda config --add channels {}"
@@ -99,28 +99,28 @@ class Install():
                 install_check = verify_installation("which blastp", options.install_dir)
 
                 if path_check and install_check:
-                    print("    Skipping RMBlast (already installed)")
+                    print_pass("    Skipping RMBlast (already installed)")
                     return
 
                 cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
                     options.install_dir)
                 sp.call(cmd,
-                    shell = True, stdout=FNULL)
-                sp.call('tar xf ncbi-blast.tar.gz',
-                    shell = True, stdout=FNULL)
+                    shell = True)
+                sp.call('cd {}; tar xf ncbi-blast.tar.gz'.format(options.install_dir),
+                    shell = True)
                 sp.call('wget -c http://www.repeatmasker.org/isb-2.6.0+-changes-vers2.patch.gz -O {}/isb-2.6.0+-changes-vers2.patch.gz'.format(
                 options.install_dir),
-                    shell = True, stdout=FNULL)
-                sp.call('gunzip {}/isb-2.6.0+-changes-vers2.patch.gz'.format(options.install_dir),
-                    shell = True, stdout=FNULL)
+                    shell = True)
+                sp.call('gunzip -f {}/isb-2.6.0+-changes-vers2.patch.gz'.format(options.install_dir),
+                    shell = True)
                 sp.call("cd {}/ncbi-blast-2.6.0+-src ; patch -p1 < ../isb-2.6.0+-changes-vers2.patch".format(options.install_dir),
-                    shell = True, stdout=FNULL)
+                    shell = True)
                 sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
                   options.install_dir),
-                       shell = True, stdout=FNULL)
+                       shell = True)
                 print("        compiling ncbi blast (this takes at least an hour)")
                 sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir),
-                       shell = True, stdout=FNULL, stderr = FNULL)
+                       shell = True)
 
                 path = "{0}/ncbi-blast-2.6.0+-src/bin".format(options.install_dir)
 
@@ -131,11 +131,11 @@ class Install():
 
             def RepeatMasker():
                 if verify_installation('RepeatMasker', 'RepeatMasker version'):
-                    print("    Skipping RepeatMasker (Already installed)")
+                    print_pass("    Skipping RepeatMasker (Already installed)")
                     return
 
 
-                print("    Installing RepeatMasker")
+                print_pass("    Installing RepeatMasker")
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
                         shell = True, stdout=FNULL, stderr = FNULL)
@@ -188,12 +188,14 @@ class Install():
             RepeatScout()
             TandenRepeatFinder()
             RMBlast()
-            RepeatMasker()
-            NSEG()
+            #RepeatMasker()
+            #NSEG()
 
 
             # Actual RepeatModeler installation
             # Download the RELEASE
+            return
+            print("INSTALL ACTUAL REPEATMODELER")
             sp.call("wget -c http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-1.0.11.tar.gz -O {}/RepeatModeler-open-1.0.11.tar.gz".format(options.install_dir),
                 shell = True, stdout = FNULL)
 
@@ -230,3 +232,8 @@ def verify_installation(command, required_out):
             return False
     except FileNotFoundError:
         return False
+
+
+import sys
+def print_pass(message, end = '\n'):
+    sys.stdout.write('\x1b[1;32m' + message.strip() + '\x1b[0m' + end)
