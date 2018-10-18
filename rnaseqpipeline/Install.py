@@ -217,7 +217,7 @@ class Install():
             )
             sp.call(repeat_mask_cmd, shell = True)
 
-            sp.call('cd {}/RepeatModeler-open-1.0.11;cp ../RepeatMasker_CONFIG RepModelConfig.pm'.format(options.install_dir),
+            sp.call('cd {}/RepeatModeler-open-1.0.11;cp ../RepeatModeler_CONFIG RepModelConfig.pm'.format(options.install_dir),
                     shell = True)
 
             sp.call("echo \'# RepeatModeler installation dir\' >> ~/.bashrc; echo \'export PATH={}/RepeatModeler-open-1.0.11:$PATH\' >> ~/.bashrc".format(
