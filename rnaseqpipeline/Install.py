@@ -51,7 +51,7 @@ class Install():
 
             def RepeatScout():
                 if verify_installation('build_lmer_table', "Usage"):
-                    print_pass('    Skipping RepeatScout (already installed)...')
+                    print_pass('\tSkipping RepeatScout (already installed)...')
                     return
 
                 print_pass("    Installing RepeatScout")
