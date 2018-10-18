@@ -173,7 +173,7 @@ class Install():
 
             def NSEG():
                 if verify_installation('nseg', "Usage:"):
-                    print("    Skipping NSEG (Already installed)")
+                    print_pass("    Skipping NSEG (Already installed)")
                     return
 
                 sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
@@ -194,7 +194,7 @@ class Install():
 
             # Actual RepeatModeler installation
             # Download the RELEASE
-            return
+            
             print("INSTALL ACTUAL REPEATMODELER")
             sp.call("wget -c http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-1.0.11.tar.gz -O {}/RepeatModeler-open-1.0.11.tar.gz".format(options.install_dir),
                 shell = True, stdout = FNULL)
