@@ -170,6 +170,7 @@ class Install():
                 sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc", shell = True)
                 sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'", shell = True)
                 sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Util)'", shell = True)
 
             def NSEG():
                 if verify_installation('nseg', "Usage:"):
@@ -194,7 +195,7 @@ class Install():
 
             # Actual RepeatModeler installation
             # Download the RELEASE
-            
+
             print("INSTALL ACTUAL REPEATMODELER")
             sp.call("wget -c http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-1.0.11.tar.gz -O {}/RepeatModeler-open-1.0.11.tar.gz".format(options.install_dir),
                 shell = True, stdout = FNULL)
@@ -211,13 +212,18 @@ class Install():
                     ], stdout = FNULL)
 
             # Now we need to update all the paths required relative to the installation directory
-            repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatModeler_CONFIG".format(
+            repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatModeler_CONFIG; sed -i 's+TRFBINLOCATION+$(which trf409.linux64)+g' {0}/RepeatModeler_CONFIG".format(
                 options.install_dir
             )
             sp.call(repeat_mask_cmd, shell = True)
 
-            sp.call('cd {}/RepeatModeler-open-1.0.11;cp ../RepeatMasker_CONFIG ./configure; perl configure '.format(options.install_dir),
+            sp.call('cd {}/RepeatModeler-open-1.0.11;cp ../RepeatMasker_CONFIG RepModelConfig.pm'.format(options.install_dir),
                     shell = True)
+
+            sp.call("echo \'# RepeatModeler installation dir\' >> ~/.bashrc; echo \'export PATH={}/RepeatModeler-open-1.0.11:$PATH\' >> ~/.bashrc".format(
+                options.install_dir
+            ),
+                shell = True)
         RepeatModeler(options)
 
 def verify_installation(command, required_out):
