@@ -196,6 +196,10 @@ class Install():
             # Actual RepeatModeler installation
             # Download the RELEASE
 
+            if verify_installation('RepeatModeler', " RepeatModeler - Model repetitive DNA"):
+                print_pass("    RepeatModeler Already Installed")
+                return
+                
             print("INSTALL ACTUAL REPEATMODELER")
             sp.call("wget -c http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-1.0.11.tar.gz -O {}/RepeatModeler-open-1.0.11.tar.gz".format(options.install_dir),
                 shell = True, stdout = FNULL)
