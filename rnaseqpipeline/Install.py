@@ -23,10 +23,10 @@ class Install():
             def RECON():
                 # Check first if already installed
                 if verify_installation('edgeredef', 'usage'):
-                    print_pass('    Skipping RECON (already installed)...')
+                    print('    Skipping RECON (already installed)...')
                     return
 
-                print_pass("    Installing RECON...")
+                print("    Installing RECON...")
                 recon_url = 'http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz'
                 download_cmd = 'wget {0} -O {1}/recon.tar.gz; cd {1}; tar xf recon.tar.gz;'.format(
                 recon_url, options.install_dir
@@ -53,10 +53,10 @@ class Install():
 
             def RepeatScout():
                 if verify_installation('build_lmer_table', "Usage"):
-                    print_pass('\tSkipping RepeatScout (already installed)...')
+                    print('\tSkipping RepeatScout (already installed)...')
                     return
 
-                print_pass("    Installing RepeatScout")
+                print("    Installing RepeatScout")
 
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
                 download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
@@ -80,7 +80,7 @@ class Install():
 
             def TandenRepeatFinder():
                 if verify_installation('trf409.linux64', 'Please use:'):
-                    print_pass('    Skipping TandemRepeatFinder (already installed)')
+                    print('    Skipping TandemRepeatFinder (already installed)')
                     return
 
                 conda_channel = "conda config --add channels {}"
@@ -101,7 +101,7 @@ class Install():
                 install_check = verify_installation("which blastn", options.install_dir)
 
                 if path_check and install_check:
-                    print_pass("    Skipping RMBlast (already installed)")
+                    print("    Skipping RMBlast (already installed)")
                     return
 
                 cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
@@ -133,11 +133,11 @@ class Install():
 
             def RepeatMasker():
                 if verify_installation('RepeatMasker', 'RepeatMasker version'):
-                    print_pass("    Skipping RepeatMasker (Already installed)")
+                    print("    Skipping RepeatMasker (Already installed)")
                     return
 
 
-                print_pass("    Installing RepeatMasker")
+                print("    Installing RepeatMasker")
                 sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
                         options.install_dir),
                         shell = True,  stdout=out_file, stderr = err_file)
@@ -176,7 +176,7 @@ class Install():
 
             def NSEG():
                 if verify_installation('nseg', "Usage:"):
-                    print_pass("    Skipping NSEG (Already installed)")
+                    print("    Skipping NSEG (Already installed)")
                     return
 
                 sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
@@ -199,7 +199,7 @@ class Install():
             # Download the RELEASE
 
             if verify_installation('RepeatModeler', " RepeatModeler - Model repetitive DNA"):
-                print_pass("    RepeatModeler Already Installed")
+                print("    RepeatModeler Already Installed")
                 return
 
 
