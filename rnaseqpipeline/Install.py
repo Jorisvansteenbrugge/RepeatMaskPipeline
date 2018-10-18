@@ -95,8 +95,8 @@ class Install():
 
             def RMBlast():
 
-                path_check = verify_installation('blastp', 'BLAST query/options error')
-                install_check = verify_installation("which blastp", options.install_dir)
+                path_check = verify_installation('blastn', 'BLAST query/options error')
+                install_check = verify_installation("which blastn", options.install_dir)
 
                 if path_check and install_check:
                     print_pass("    Skipping RMBlast (already installed)")
@@ -188,7 +188,7 @@ class Install():
             RepeatScout()
             TandenRepeatFinder()
             RMBlast()
-            #RepeatMasker()
+            RepeatMasker()
             #NSEG()
 
 
