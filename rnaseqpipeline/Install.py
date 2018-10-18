@@ -229,6 +229,9 @@ class Install():
             sp.call('sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" {}/RepeatModeler-open-1.0.11/RepeatModeler'.format(options.install_dir),
                     shell = True,  stdout=out_file, stderr = err_file) # replace the perl shebang line
 
+            sp.call('cd {}/RepeatModeler-open-1.0.11 ; for i in *; do sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" $i; done'.format(options.install_dir),
+                shell = True, stdout = out_file, stderr = err_file)
+
             sp.call("echo \'# RepeatModeler installation dir\' >> ~/.bashrc; echo \'export PATH={}/RepeatModeler-open-1.0.11:$PATH\' >> ~/.bashrc".format(
                 options.install_dir
             ),
