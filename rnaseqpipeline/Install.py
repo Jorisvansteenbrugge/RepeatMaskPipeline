@@ -17,7 +17,7 @@ class Install():
         out_file = open("{}/out.log".format(options.install_dir), 'w')
         err_file = open("{}/err.log".format(options.install_dir), 'w')
 
-        def RepeatModeler(options):
+        def RepeatModeler():
             print_pass("Installing RepeatModeler")
 
             def RECON():
@@ -130,6 +130,8 @@ class Install():
                     path
                 ), shell = True,  stdout=out_file, stderr = err_file)
 
+                sp.call("conda install -y gnutls",
+                    shell = True, stdout = out_file, stderr = err_file)
 
             def RepeatMasker():
                 if verify_installation('RepeatMasker', 'RepeatMasker version'):
@@ -236,7 +238,20 @@ class Install():
                 options.install_dir
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
-        RepeatModeler(options)
+
+        def Maker2():
+
+            conda_channel = "conda config --add channels {}"
+            sp.call(conda_channel.format('bioconda'),
+                    shell = True,  stdout=out_file, stderr = err_file)
+            sp.call(conda_channel.format('conda-forge'),
+                    shell = True,  stdout=out_file, stderr = err_file)
+            sp.call(conda_channel.format('WURnematology'),
+                    shell = True,  stdout=out_file, stderr = err_file)
+            sp.call("conda install -y tandemrepeatfinder",
+                    shell = True,  stdout=out_file, stderr = err_file)
+
+        RepeatModeler()
 
 def verify_installation(command, required_out):
     import subprocess as sp
