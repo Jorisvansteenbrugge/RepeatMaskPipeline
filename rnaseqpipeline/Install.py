@@ -104,6 +104,9 @@ class Install():
                     print("    Skipping RMBlast (already installed)")
                     return
 
+                sp.call("conda install -y gnutls",
+                    shell = True, stdout = out_file, stderr = err_file)
+                    
                 cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
                     options.install_dir)
                 sp.call(cmd,
@@ -130,8 +133,7 @@ class Install():
                     path
                 ), shell = True,  stdout=out_file, stderr = err_file)
 
-                sp.call("conda install -y gnutls",
-                    shell = True, stdout = out_file, stderr = err_file)
+
 
             def RepeatMasker():
                 if verify_installation('RepeatMasker', 'RepeatMasker version'):
