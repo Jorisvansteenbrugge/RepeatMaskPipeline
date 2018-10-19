@@ -1,21 +1,38 @@
 
 
 class Install():
+    """Installation class for pipeline dependenciesself.
+        This class does its best job to detect if dependencies are already installed
+        in the provided path, and if not, to install them.
+    """
 
     def verify_installation(options):
-        print('veryifying install')
+        """ Veryify the installation without trying to install any missing packages
+            currently not supported.
+
+            Keyword Arguments:
+                options -- argparse opject containing the command line arguments
+        """
+        print('veryifying the install is currently unsupportive')
 
 
 
 
 
     def perform_installation(options):
+        """ Install the required tools for the pipeline to a certain directory
+            Any missing tools or dependencies will be installed automatically.
+
+
+            Keyword Arguments:
+                options -- argparse opject containing the command line arguments
+        """
         import subprocess as sp
 
         print('Performing installation in {} '.format(options.install_dir))
 
-        out_file = open("{}/out.log".format(options.install_dir), 'w')
-        err_file = open("{}/err.log".format(options.install_dir), 'w')
+        out_file = open("{}/out.log".format(options.install_dir), 'w') # logging standard output
+        err_file = open("{}/err.log".format(options.install_dir), 'w') # Logging standeard error
 
         def RepeatModeler():
             print_pass("Installing RepeatModeler")
