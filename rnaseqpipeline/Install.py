@@ -97,10 +97,9 @@ class Install():
 
             def RMBlast():
 
-                path_check = verify_installation('blastn', 'BLAST query/options error')
-                install_check = verify_installation("which blastn", options.install_dir)
+                path_check = verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error')
 
-                if path_check and install_check:
+                if path_check:
                     print("    Skipping RMBlast (already installed)")
                     return
 
@@ -129,6 +128,9 @@ class Install():
 
                 path = "{0}/ncbi-blast-2.6.0+-src/bin".format(options.install_dir)
 
+
+                sp.call("conda install -y blast -c bioconda", shell = True,
+                    stdout = out_file, stderr = err_file)
                 # Probably should not be added to the path
                 #sp.call("echo \'# RMBlast installation dir\' >> ~/.bashrc; echo \'export PATH={}:$PATH\' >> ~/.bashrc".format(
                 #    path
