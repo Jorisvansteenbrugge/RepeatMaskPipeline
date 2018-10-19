@@ -106,7 +106,7 @@ class Install():
 
                 sp.call("conda install -y gnutls",
                     shell = True, stdout = out_file, stderr = err_file)
-                    
+
                 cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
                     options.install_dir)
                 sp.call(cmd,
@@ -241,6 +241,19 @@ class Install():
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
 
+        def RNAmmer():
+            """This will only installon one of the bioinformatics servers, as therefore
+            software is only deployable within the institution. Othewise you have
+            to download a copy manually
+            """
+            sp.call("mkdir {0}/rnammer; cp /home/steen176/tools/rnammer-1.2.src.tar.Z {0}/rnammer; cd {0}/rnammer; tar xf rnammer-1.2.src.tar.Zvim".format(options.install_dir),
+                shell = True, stdout = out_file, stderr = err_file)
+
+
+            sp.call("echo \'# rnammer installation dir\' >> ~/.bashrc; echo \'export PATH={}/rnammer:$PATH\' >> ~/.bashrc".format(
+                options.install_dir
+            ),
+                shell = True,  stdout=out_file, stderr = err_file)
         def Maker2():
 
             conda_channel = "conda config --add channels {}"
