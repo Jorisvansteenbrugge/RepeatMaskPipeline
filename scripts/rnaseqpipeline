@@ -41,7 +41,7 @@ def arguments():
     running_sub_parser = running_parser.add_subparsers(dest = 'running_sub',
                             help = "Running pipeline tools")
 
-    running_all_parser = running_sub_parser.add_parser("run_all",
+    running_all_parser = running_sub_parser.add_parser("all",
                                 help = "Run all supported pars of the pipeline")
     running_all_parser.set_defaults(func= Run.run_all)
 
