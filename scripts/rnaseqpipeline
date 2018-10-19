@@ -43,7 +43,7 @@ def arguments():
 
     running_all_parser = running_sub_parser.add_parser("run_all",
                                 help = "Run all supported pars of the pipeline")
-    installation_parser.set_defaults(func=Run.run_all)
+    running_all_parser.set_defaults(func= Run.run_all)
 
     running_all_parser.add_argument("--workdir", help = 'Absolute path to the working directory.',
                                     required = True)
