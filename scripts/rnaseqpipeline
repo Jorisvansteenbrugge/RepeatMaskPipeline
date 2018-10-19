@@ -2,6 +2,7 @@
 
 import argparse
 from rnaseqpipeline.Install import Install
+from rnaseqpipeline.Run import Run
 
 
 def arguments():
@@ -36,7 +37,18 @@ def arguments():
     running_parser = subparsers.add_parser("run",
                         help = "Run (parts) of the pipeline",
                         formatter_class = argparse.RawTextHelpFormatter)
-    
+
+    running_sub_parser = running_parser.add_subparsers(dest = 'running_sub',
+                            help = "Running pipeline tools")
+
+    running_all_parser = running_sub_parser.add_parser("run_all",
+                                help = "Run all supported pars of the pipeline")
+    installation_parser.set_defaults(func=Run.run_all)
+
+    running_all_parser.add_argument("--workdir", help = 'Absolute path to the working directory.',
+                                    required = True)
+    running_all_parser.add_argument('-i', help = "Genome Assembly in fasta format",
+                                    required = True)
 
 
 
