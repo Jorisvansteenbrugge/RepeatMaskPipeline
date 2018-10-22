@@ -49,6 +49,8 @@ def arguments():
                                     required = True)
     running_all_parser.add_argument('-i', dest = 'assembly', help = "Genome Assembly in fasta format",
                                     required = True)
+    running_all_parser.add_argument('-p', dest = "n_treads", help = "The number of CPU threads to use",
+                                    required = False, default = 4, type = int)
 
 
 
