@@ -16,7 +16,15 @@ def call_sp(command):
 
 def RepeatModeler(options):
 
-    # Build Genome database
+    # Prepare and Build Genome database
+    prepare_cmd = "cp {} {}".format(options.assembly, options.workdir)
     build_cmd = "cd {}; BuildDatabase -engine ncbi -n \"genome_db\" {}".format(options.workdir,
                                                                                options.assembly)
+    call_sp(prepare_cmd)
     call_sp(build_cmd)
+
+
+    # Run RepeatModeler
+    repeatModeler_cmd = "cd {}; RepeatModeler -pa {} -database genome_db 2>&1 | tee RepeatModeler.stdout".format(
+        options.workdir, options.n_treads)
+    print(repeatModeler_cmd)
