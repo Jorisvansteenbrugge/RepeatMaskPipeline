@@ -2,9 +2,9 @@ class Run():
 
     def run_all(options):
 
-        #repeatmodeler_dir = RepeatModeler(options)
-        blastNR(options, "repeatmodeler_dir")
-
+        repeatmodeler_dir = RepeatModeler(options)
+        blastPrep(options, "repeatmodeler_dir")
+        blastNR(options)
 
 
 
@@ -31,7 +31,7 @@ def RepeatModeler(options):
 
     # Run RepeatModeler
     repeatModeler_cmd = "cd {}; RepeatModeler -pa {} -database genome_db 2>&1 | tee RepeatModeler.stdout".format(
-        options.workdir, options.n_treads)
+        options.workdir, options.n_threads)
     call_sp(repeatModeler_cmd)
 
     # Retrieve the workdir from RepeatModeler
@@ -40,7 +40,18 @@ def RepeatModeler(options):
 
     return repeatmodeler_dir
 
-def blastNR(options, repeatmodeler_dir):
+def blastPrep(options, repeatmodeler_dir):
+    from fastaSplitter import fastaSplitter
      # Create folder structure
      create_folders_cmd = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
+     cp_repeatmodel_file = "cd {}; cp {}/consensi.fa.classified blastResults".format(
+        options.workdir, repeatmodeler_dir)
      call_sp(create_folders_cmd)
+
+     fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
+        repeatmodeler_dir, options.n_threads)
+
+def blastNR(options):
+    blastNR_cmd = "cd {}/blastResults/NR; for file in ../consensi_*; do  blastx -db nr -remote -query $file -evalue 10e-5 -out $(basename $file .fa).blastx.out & done".format(
+        options.workdir)
+    call_sp(blastNR)
