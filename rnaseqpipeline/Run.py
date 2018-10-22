@@ -27,4 +27,4 @@ def RepeatModeler(options):
     # Run RepeatModeler
     repeatModeler_cmd = "cd {}; RepeatModeler -pa {} -database genome_db 2>&1 | tee RepeatModeler.stdout".format(
         options.workdir, options.n_treads)
-    print(repeatModeler_cmd)
+    call_sp(repeatModeler_cmd)
