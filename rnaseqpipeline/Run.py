@@ -2,7 +2,8 @@ class Run():
 
     def run_all(options):
 
-        RepeatModeler(options)
+        repeatmodeler_dir = RepeatModeler(options)
+        blastNR(options, repeatmodeler_dir)
 
 
 
@@ -13,6 +14,10 @@ import subprocess as sp
 
 def call_sp(command):
     sp.call(command, shell = True)#, stdout = out_file, stderr = err_file)
+
+def call_sp_retrieve(command):
+    out, err = sp.Popen(command, shell = True, stdout = sp.PIPE).communicate()
+    return out.decode()
 
 def RepeatModeler(options):
 
@@ -28,3 +33,11 @@ def RepeatModeler(options):
     repeatModeler_cmd = "cd {}; RepeatModeler -pa {} -database genome_db 2>&1 | tee RepeatModeler.stdout".format(
         options.workdir, options.n_treads)
     call_sp(repeatModeler_cmd)
+
+    # Retrieve the workdir from RepeatModeler
+    repeatModeler_workdir_cmd = "cat RepeatModeler.stdout | egrep \"Working directory:  .+\""
+    repeatmodeler_dir = call_sp_retrieve(repeatModeler_workdir_cmd).split("  ")[1].strip("\n")
+
+    return repeatmodeler_dir
+
+def blastNR(options, repeatmodeler_dir)
