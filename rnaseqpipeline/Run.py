@@ -48,7 +48,7 @@ def blastPrep(options, repeatmodeler_dir):
         options.workdir, repeatmodeler_dir)
     call_sp(create_folders_cmd)
 
-     fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
+    fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
         repeatmodeler_dir, options.n_threads)
 
 def blastNR(options):
