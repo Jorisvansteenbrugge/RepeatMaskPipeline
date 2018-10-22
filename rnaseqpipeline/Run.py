@@ -40,4 +40,5 @@ def RepeatModeler(options):
 
     return repeatmodeler_dir
 
-def blastNR(options, repeatmodeler_dir)
+def blastNR(options, repeatmodeler_dir):
+    pass
