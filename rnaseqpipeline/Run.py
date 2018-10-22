@@ -43,10 +43,10 @@ def RepeatModeler(options):
 def blastPrep(options, repeatmodeler_dir):
     from fastaSplitter import fastaSplitter
      # Create folder structure
-     create_folders_cmd = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
-     cp_repeatmodel_file = "cd {}; cp {}/consensi.fa.classified blastResults".format(
+    create_folders_cmd = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
+    cp_repeatmodel_file = "cd {}; cp {}/consensi.fa.classified blastResults".format(
         options.workdir, repeatmodeler_dir)
-     call_sp(create_folders_cmd)
+    call_sp(create_folders_cmd)
 
      fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
         repeatmodeler_dir, options.n_threads)
