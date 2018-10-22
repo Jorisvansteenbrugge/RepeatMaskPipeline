@@ -43,3 +43,4 @@ def RepeatModeler(options):
 def blastNR(options, repeatmodeler_dir):
      # Create folder structure
      create_folders_cmd = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
+     call_sp(create_folders_cmd)
