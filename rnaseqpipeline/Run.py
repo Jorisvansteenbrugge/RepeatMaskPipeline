@@ -3,9 +3,9 @@ class Run():
     def run_all(options):
 
         repeatmodeler_dir = RepeatModeler(options)
-        blastPrep(options, "repeatmodeler_dir")
-        blastNR(options)
+        blastPrep(options, repeatmodeler_dir)
 
+        blastNR(options)
 
 
 import subprocess as sp
