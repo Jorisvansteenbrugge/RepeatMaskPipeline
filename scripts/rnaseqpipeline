@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import textwrap
 from rnaseqpipeline.Install import Install
 from rnaseqpipeline.Run import Run
 
