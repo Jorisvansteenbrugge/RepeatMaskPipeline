@@ -13,7 +13,7 @@ class Install():
             Keyword Arguments:
                 options -- argparse opject containing the command line arguments
         """
-        print('veryifying the install is currently unsupportive')
+        print('veryifying the install is currently not supported')
 
 
 
