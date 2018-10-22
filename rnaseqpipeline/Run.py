@@ -2,8 +2,8 @@ class Run():
 
     def run_all(options):
 
-        repeatmodeler_dir = RepeatModeler(options)
-        blastNR(options, repeatmodeler_dir)
+        #repeatmodeler_dir = RepeatModeler(options)
+        blastNR(options, "repeatmodeler_dir")
 
 
 
@@ -41,4 +41,5 @@ def RepeatModeler(options):
     return repeatmodeler_dir
 
 def blastNR(options, repeatmodeler_dir):
-    pass
+     # Create folder structure
+     create_folders_cmd = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
