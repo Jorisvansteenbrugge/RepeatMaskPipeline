@@ -37,13 +37,12 @@ def RepeatModeler(options):
     # Retrieve the workdir from RepeatModeler
     repeatModeler_workdir_cmd = "cd {}; cat RepeatModeler.stdout | egrep \"Working directory:  .+\"".format(
         options.workdir)
-    
+
     repeatmodeler_dir = call_sp_retrieve(repeatModeler_workdir_cmd).split("  ")[1].strip("\n")
 
     return repeatmodeler_dir
 
 def blastPrep(options, repeatmodeler_dir):
-    from fastaSplitter import fastaSplitter
      # Create folder structure
     create_folders_cmd = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
     cp_repeatmodel_file = "cd {}; cp {}/consensi.fa.classified blastResults".format(
