@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #Author: Joris van Steenbrugge
 #since: April 19
-#Function: Takes the fasta entries from a single file and outputs them to individual files
+#Function: Takes the fasta entries from a single file and (equally) outputs them to N individual files
 from Bio import SeqIO
 import sys
 import argparse
@@ -29,7 +29,7 @@ def write_outputs(records, input_file):
         with open("{}_{}.fa".format(basename, c), 'w') as out_file:
             for record in record_set:
                 out_file.write(">{}\n{}\n".format(record.id, record.seq))
-        c += 1 
+        c += 1
 
 if __name__ == "__main__":
 
@@ -38,6 +38,3 @@ if __name__ == "__main__":
     splitted_records = split(records, arguments.n_out)
 
     write_outputs(splitted_records, arguments.input_file)
-
-
-
