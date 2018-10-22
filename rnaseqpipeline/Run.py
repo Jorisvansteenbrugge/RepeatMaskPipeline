@@ -35,7 +35,9 @@ def RepeatModeler(options):
     call_sp(repeatModeler_cmd)
 
     # Retrieve the workdir from RepeatModeler
-    repeatModeler_workdir_cmd = "cat RepeatModeler.stdout | egrep \"Working directory:  .+\""
+    repeatModeler_workdir_cmd = "cd {}; cat RepeatModeler.stdout | egrep \"Working directory:  .+\"".format(
+        options.workdir)
+    
     repeatmodeler_dir = call_sp_retrieve(repeatModeler_workdir_cmd).split("  ")[1].strip("\n")
 
     return repeatmodeler_dir
