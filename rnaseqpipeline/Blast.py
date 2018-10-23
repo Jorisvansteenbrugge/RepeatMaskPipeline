@@ -13,7 +13,7 @@ class Blaster():
     def blastFasta(fasta_file, blast_type, n_threads, database = 'nr', remote = '-remote'):
         records = list(SeqIO.parse(fasta_file, 'fasta'))
 
-        results = Parallel(n_jobs = n_threads)(delayed(blast(i, blast_type, database)) (i) for i in records)
+        results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
         print(results)
 
 
