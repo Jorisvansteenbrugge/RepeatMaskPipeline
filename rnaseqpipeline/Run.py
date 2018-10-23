@@ -1,4 +1,5 @@
 repeatmodeler_dir = ""
+progress_file_path = ""
 class Run():
 
     def run_all(options):
@@ -32,11 +33,11 @@ def lookup_progress(options):
                     "blastRFAM"     : 4,
                    }
 
-
-    file_path = "{}/.progress_file".format(options.workdir)
+    global progress_file_path
+    progress_file_path = "{}/.progress_file".format(options.workdir)
 
     try:
-        with open(file_path) as progress_file:
+        with open(progress_file_path) as progress_file:
             global repeatmodeler_dir
             file_content = [line.rstrip("\n") for line in progress_file]
 
@@ -45,6 +46,7 @@ def lookup_progress(options):
             return 2
     except FileNotFoundError:
         # TODO: Create the file
+        open(progress_file_path, 'w')
         return 0
 
 
@@ -80,6 +82,10 @@ def RepeatModeler(options):
 
     repeatmodeler_dir = call_sp_retrieve(repeatModeler_workdir_cmd).split("  ")[1].strip("\n")
 
+    # write progress report
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("RepeatModeler\t{}\n".format(repeatmodeler_dir))
+
 
 def blastPrep(options):
      # Create folder structure
@@ -88,10 +94,9 @@ def blastPrep(options):
         options.workdir, repeatmodeler_dir)
     call_sp(create_folders_cmd)
 
-    # Splitting the fasta file became deprecated due to the 'smart' parallel blast implementation
-    ################
-    # fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
-    #     options.workdir, repeatmodeler_dir, options.n_threads)
+    # write progress report
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("blastPrep\t1\n")
 
 def blastNR(options):
     """Blast the entries in the  RepeatModler fasta file to the NCBI nr database.
