@@ -23,11 +23,11 @@ def lookup_progress(options):
     This method looks for the `.progress_file` in the working directory. If absent,
     it is created, otherwise the progress is returned by this function.
     """
-    global repeatmodeler_dir
-    return_table = {"RepeatModeler" : 0,
-                    "blastPrep"     : 1,
-                    "BlastNR"       : 2,
-                    "blastRFAM"     : 3,
+
+    return_table = {"RepeatModeler" : 1,
+                    "blastPrep"     : 2,
+                    "BlastNR"       : 3,
+                    "blastRFAM"     : 4,
                    }
 
 
@@ -35,10 +35,11 @@ def lookup_progress(options):
 
     try:
         with open(file_path) as progress_file:
+            global repeatmodeler_dir
             file_content = [line.rstrip("\n") for line in progress_file]
             print(file_content)
             repeatModeler_dir = file_content[-1][1]
-            return 1
+            return 2
     except FileNotFoundError:
         # TODO: Create the file
         return 0
