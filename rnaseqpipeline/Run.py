@@ -9,8 +9,33 @@ class Run():
 
 
 import subprocess as sp
+from Blast import Blaster
 # out_file = open("{}/out.log".format(options.install_dir), 'w') # logging standard output
 # err_file = open("{}/err.log".format(options.install_dir), 'w') # Logging standeard error
+
+def lookup_progress(options):
+    """Look up if a previous run was partially finished and continue where it left of.
+    This method looks for the `.progress_file` in the working directory. If absent,
+    it is created, otherwise the progress is returned by this function.
+    """
+    # return_table = {"RepeatModeler" : 1,
+    #                 "BlastNR"       : 2,
+    #                 "blastRFAM"     : 3,
+    #                }
+
+
+    file_path = "{}/.progress_file".format(options.workdir)
+
+    try:
+        with open(file_path) as progress_file:
+            pass
+    except FileNotFoundError:
+        pass
+
+
+
+
+
 
 def call_sp(command):
     sp.call(command, shell = True)#, stdout = out_file, stderr = err_file)
@@ -49,10 +74,17 @@ def blastPrep(options, repeatmodeler_dir):
         options.workdir, repeatmodeler_dir)
     call_sp(create_folders_cmd)
 
-    fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
-        options.workdir, repeatmodeler_dir, options.n_threads)
+    # Splitting the fasta file became deprecated due to the 'smart' parallel blast implementation
+    ################
+    # fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
+    #     options.workdir, repeatmodeler_dir, options.n_threads)
 
 def blastNR(options):
-    blastNR_cmd = "cd {}/blastResults/NR; for file in ../consensi_*; do  blastx -db nr -remote -query $file -evalue 10e-5 -out $(basename $file .fa).blastx.out & done".format(
-        options.workdir)
-    call_sp(blastNR)
+    """Blast the entries in the  RepeatModler fasta file to the NCBI nr database.
+    The results are written to a file named blast output
+    """
+    fasta_file = "{}/consensi.fa.classified".format(repeatmodeler_dir)
+    Blaster.blastFasta(fasta_file = fasta_file,
+                       blast_type = 'blastn',
+                       n_threads  = 6,
+                       database   = "nr")

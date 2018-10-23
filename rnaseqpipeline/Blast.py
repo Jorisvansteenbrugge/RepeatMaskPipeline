@@ -22,10 +22,14 @@ class Blaster():
                 remote     -- str, argument to indicate if the blast database is remote. Argument should either be "-remote" or ""
 
         """
+        # Parse the fast file
         records = list(SeqIO.parse(fasta_file, 'fasta'))
 
+        # Parallel execution
         results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
-        with open('blast_output.txt', 'w') as out_file:
+
+        # Output all results to a file single-threaded
+        with open('blast_{}_output.txt'.format(database), 'w') as out_file:
             for result in results:
                 out_file.write(result)
                 out_file.write("\n")
@@ -33,6 +37,10 @@ class Blaster():
 
 
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
+    if remote == '-remote':
+        wait_time = random.randint(1, 10)
+        time.sleep(wait_time # Make sure we don't spam the NCBI servers all at once
+
 
     blast_cmd = "{0} -db {1} {2} -query - ".format(blast_type, database, remote)
 
