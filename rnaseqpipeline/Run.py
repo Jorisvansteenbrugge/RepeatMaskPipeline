@@ -1,6 +1,8 @@
 class Run():
 
     def run_all(options):
+
+
         sequence = [RepeatModeler, blastPrep, blastNR]
         entry_point = 0
 
@@ -21,10 +23,11 @@ def lookup_progress(options):
     This method looks for the `.progress_file` in the working directory. If absent,
     it is created, otherwise the progress is returned by this function.
     """
-    return_table = {"RepeatModeler" : 1,
-                    "blastPrep"     : 2,
-                    "BlastNR"       : 3,
-                    "blastRFAM"     : 4,
+    global repeatmodeler_dir
+    return_table = {"RepeatModeler" : 0,
+                    "blastPrep"     : 1,
+                    "BlastNR"       : 2,
+                    "blastRFAM"     : 3,
                    }
 
 
@@ -34,6 +37,8 @@ def lookup_progress(options):
         with open(file_path) as progress_file:
             file_content = [line.rstrip("\n") for line in progress_file]
             print(file_content)
+            repeatModeler_dir = file_content[-1][1]
+            return 2
     except FileNotFoundError:
         pass
 
