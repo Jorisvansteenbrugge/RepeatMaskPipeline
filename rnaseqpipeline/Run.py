@@ -6,7 +6,7 @@ class Run():
         repeatmodeler_dir = RepeatModeler(options)
         blastPrep(options, repeatmodeler_dir)
 
-        blastNR(options)
+        blastNR(options, repeatmodeler_dir)
 
 
 import subprocess as sp
@@ -80,7 +80,7 @@ def blastPrep(options, repeatmodeler_dir):
     # fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
     #     options.workdir, repeatmodeler_dir, options.n_threads)
 
-def blastNR(options):
+def blastNR(options, repeatmodeler_dir):
     """Blast the entries in the  RepeatModler fasta file to the NCBI nr database.
     The results are written to a file named blast output
     """
