@@ -1,12 +1,14 @@
 class Run():
 
     def run_all(options):
-        global repeatmodeler_dir
+        sequence = [blastPrep, blastNR, RepeatModeler]
+        entry_point = 0
 
-        repeatmodeler_dir = RepeatModeler(options)
-        blastPrep(options, repeatmodeler_dir)
+        for i in range(entry_point, len(sequence)):
+            func = sequence[i]
+            func(options)
 
-        blastNR(options, repeatmodeler_dir)
+
 
 
 import subprocess as sp
@@ -46,7 +48,7 @@ def call_sp_retrieve(command):
     return out.decode()
 
 def RepeatModeler(options):
-
+    global repeatmodeler_dir
     # Prepare and Build Genome database
     prepare_cmd = "cp {} {}".format(options.assembly, options.workdir)
     build_cmd = "cd {}; BuildDatabase -engine ncbi -n \"genome_db\" {}".format(options.workdir,
@@ -66,9 +68,8 @@ def RepeatModeler(options):
 
     repeatmodeler_dir = call_sp_retrieve(repeatModeler_workdir_cmd).split("  ")[1].strip("\n")
 
-    return repeatmodeler_dir
 
-def blastPrep(options, repeatmodeler_dir):
+def blastPrep(options):
      # Create folder structure
     create_folders_cmd  = "cd {}; mkdir -p blastResults; cd blastResults; mkdir -p NR; mkdir -p RFAM; mkdir -p Retrotransposon".format(options.workdir)
     cp_repeatmodel_file = "cd {}; cp {}/consensi.fa.classified blastResults".format(
@@ -80,7 +81,7 @@ def blastPrep(options, repeatmodeler_dir):
     # fasta_split_cmd = "cd {}/blastResults; fastaSplitter -i {}/consensi.fa.classified -n {}".format(
     #     options.workdir, repeatmodeler_dir, options.n_threads)
 
-def blastNR(options, repeatmodeler_dir):
+def blastNR(options):
     """Blast the entries in the  RepeatModler fasta file to the NCBI nr database.
     The results are written to a file named blast output
     """
