@@ -38,8 +38,9 @@ def lookup_progress(options):
         with open(file_path) as progress_file:
             global repeatmodeler_dir
             file_content = [line.rstrip("\n") for line in progress_file]
-            print(file_content)
-            repeatModeler_dir = file_content[-1][1]
+
+            # currently a hack
+            repeatModeler_dir = file_content[-1].split()[1]
             return 2
     except FileNotFoundError:
         # TODO: Create the file
