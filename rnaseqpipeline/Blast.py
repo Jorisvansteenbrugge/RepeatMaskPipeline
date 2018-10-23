@@ -1,11 +1,9 @@
 #!/usr/bin/env python
+import subprocess as sp
+from Bio import SeqIO
+from joblib import Parallel, delayed
 
 class Blaster():
-    import subprocess as sp
-    from Bio import SeqIO
-    from joblib import Parallel, delayed
-
-
 
     def blastFasta(fasta_file, blast_type):
         records = list(SeqIO.parse(fasta_file, 'fasta'))
