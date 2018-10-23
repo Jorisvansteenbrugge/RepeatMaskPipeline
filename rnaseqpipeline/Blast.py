@@ -17,5 +17,5 @@ def blast(record, blast_type, database = 'nr', format_type = "Text", remote = "-
     blast_cmd = "{0} -database {1} {2} -query - ".format(blast_type, database, remote)
 
     p = sp.Popen(blast_cmd, stdin = sp.PIPE, stdout = sp.PIPE, shell = True)
-    blast_out = p.communicate(input=record.seq)
+    blast_out = p.communicate(input=str(record.seq).encode()
     print(blast_out)
