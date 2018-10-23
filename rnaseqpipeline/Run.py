@@ -1,7 +1,8 @@
 class Run():
 
     def run_all(options):
-
+        print("Type")
+        print(type(options))
         repeatmodeler_dir = RepeatModeler(options)
         blastPrep(options, repeatmodeler_dir)
 
