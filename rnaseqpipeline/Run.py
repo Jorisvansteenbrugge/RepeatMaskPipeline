@@ -1,8 +1,8 @@
 class Run():
 
     def run_all(options):
-        print("Type")
-        print(type(options))
+        global repeatmodeler_dir
+
         repeatmodeler_dir = RepeatModeler(options)
         blastPrep(options, repeatmodeler_dir)
 
@@ -70,7 +70,7 @@ def RepeatModeler(options):
 
 def blastPrep(options, repeatmodeler_dir):
      # Create folder structure
-    create_folders_cmd  = "cd {}; mkdir blastResults; cd blastResults; mkdir NR; mkdir RFAM; mkdir Retrotransposon".format(options.workdir)
+    create_folders_cmd  = "cd {}; mkdir -p blastResults; cd blastResults; mkdir -p NR; mkdir -p RFAM; mkdir -p Retrotransposon".format(options.workdir)
     cp_repeatmodel_file = "cd {}; cp {}/consensi.fa.classified blastResults".format(
         options.workdir, repeatmodeler_dir)
     call_sp(create_folders_cmd)
@@ -85,7 +85,9 @@ def blastNR(options, repeatmodeler_dir):
     The results are written to a file named blast output
     """
     fasta_file = "{}/consensi.fa.classified".format(repeatmodeler_dir)
+    out_dir    = "{}/blastResults/NR".format(options.workdir)
     Blaster.blastFasta(fasta_file = fasta_file,
                        blast_type = 'blastn',
                        n_threads  = 6,
+                       out_dir    = out_dir,
                        database   = "nr")
