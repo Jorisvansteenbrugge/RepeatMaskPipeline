@@ -10,7 +10,7 @@ class Run():
 
 
 import subprocess as sp
-from Blast import Blaster
+from rnaseqpipeline.Blast import Blaster
 # out_file = open("{}/out.log".format(options.install_dir), 'w') # logging standard output
 # err_file = open("{}/err.log".format(options.install_dir), 'w') # Logging standeard error
 
