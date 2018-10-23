@@ -32,8 +32,8 @@ class Blaster():
         with open('blast_{}_output.txt'.format(out_dir, database), 'w') as out_file:
             for result in results:
                 print(len(result))
-                out_file.write(result)
-                out_file.write("\n")
+                # out_file.write(result)
+                # out_file.write("\n")
 
 
 
