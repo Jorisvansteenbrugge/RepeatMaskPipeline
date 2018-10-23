@@ -4,7 +4,7 @@ class Run():
 
 
         sequence = [RepeatModeler, blastPrep, blastNR]
-        entry_point = lookup_progress
+        entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(sequence)):
             func = sequence[i]
