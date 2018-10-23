@@ -5,7 +5,7 @@ class Run():
     def run_all(options):
 
 
-        sequence = [RepeatModeler, blastPrep]#, blastNR]
+        sequence = [RepeatModeler, blastPrep, blastNR]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(sequence)):
