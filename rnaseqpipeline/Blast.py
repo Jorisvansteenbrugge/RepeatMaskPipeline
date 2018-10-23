@@ -39,7 +39,7 @@ class Blaster():
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
     if remote == '-remote':
         wait_time = random.randint(1, 10)
-        time.sleep(wait_time # Make sure we don't spam the NCBI servers all at once
+        time.sleep(wait_time) # Make sure we don't spam the NCBI servers all at once
 
 
     blast_cmd = "{0} -db {1} {2} -query - ".format(blast_type, database, remote)
