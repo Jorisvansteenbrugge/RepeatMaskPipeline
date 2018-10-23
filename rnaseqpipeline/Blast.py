@@ -12,7 +12,7 @@ class Blaster():
 
 
 
-def blast(record, blast_type, database = 'nr' format_type = "Text", remote = "-remote"):
+def blast(record, blast_type, database = 'nr', format_type = "Text", remote = "-remote"):
 
     blast_cmd = "{0} -database {1} {2} -query - ".format(blast_type, database, remote)
 
