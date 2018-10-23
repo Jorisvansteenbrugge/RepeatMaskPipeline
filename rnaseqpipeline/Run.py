@@ -1,3 +1,4 @@
+repeatmodeler_dir = ""
 class Run():
 
     def run_all(options):
