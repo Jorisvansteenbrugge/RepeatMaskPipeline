@@ -10,8 +10,7 @@ import time
 
 class Blaster():
 
-    def blastFasta(fasta_file, blast_type, n_threads, database = 'nr', remote = '-remote',
-                   out_dir):
+    def blastFasta(fasta_file, blast_type, n_threads, out_dir, database = 'nr', remote = '-remote'):
         """Blast all records in a fasta fileself.
         Blasting can be done parallelized, to reduce execution times (recommended is not to use to many threads).
 
