@@ -8,6 +8,8 @@ class Blaster():
     def blastFasta(fasta_file, blast_type):
         records = list(SeqIO.parse(fasta_file, 'fasta'))
 
+        blast(records[0], blast_type, database = 'swissprot')
+
 
 
 def blast(record, blast_type, database = 'nr', format_type = "Text", remote = "-remote"):
