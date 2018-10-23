@@ -4,7 +4,7 @@ class Run():
 
 
         sequence = [RepeatModeler, blastPrep, blastNR]
-        entry_point = 0
+        entry_point = lookup_progress
 
         for i in range(entry_point, len(sequence)):
             func = sequence[i]
@@ -40,7 +40,8 @@ def lookup_progress(options):
             repeatModeler_dir = file_content[-1][1]
             return 1
     except FileNotFoundError:
-        pass
+        # TODO: Create the file
+        return 0
 
 
 
