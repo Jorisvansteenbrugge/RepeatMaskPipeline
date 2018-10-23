@@ -8,6 +8,5 @@ setup(
         author_email = "joris.vansteenbrugge@wur.nl",
         packages = find_packages(),
         description = 'WUR nematology rnaseq pipeline',
-#        packages = ['rnaseqpipeline'],
         scripts = ['scripts/rnaseqpipeline', 'scripts/fastaSplitter']
         )
