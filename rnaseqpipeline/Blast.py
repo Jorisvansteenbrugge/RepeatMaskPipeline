@@ -1,10 +1,21 @@
 #!/usr/bin/env python
 
 class Blaster():
-    from Bio.Blast import NCBIWWW
-    from Bio.Blast import NCBIXML
+    import subprocess as sp
     from Bio import SeqIO
+    from joblib import Parallel, delayed
+
 
 
     def blastFasta(fasta_file, blast_type):
-        pass
+        records = list(SeqIO.parse(fasta_file, 'fasta'))
+
+
+
+def blast(record, blast_type, database = 'nr' format_type = "Text", remote = "-remote"):
+
+    blast_cmd = "{0} -database {1} {2} -query - ".format(blast_type, database, remote)
+
+    p = sp.Popen(blast_cmd, stdin = sp.PIPE, stdout = sp.PIPE, shell = True)
+    blast_out = p.communicate(input=record.seq)
+    print(blast_out)
