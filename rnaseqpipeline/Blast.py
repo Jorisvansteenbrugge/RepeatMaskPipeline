@@ -31,7 +31,7 @@ class Blaster():
         # Output all results to a file single-threaded
         with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
             for result in results:
-                print(len(result))
+                print(result[0])
                 # out_file.write(result)
                 # out_file.write("\n")
 
