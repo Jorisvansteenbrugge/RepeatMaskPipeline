@@ -27,8 +27,8 @@ class Blaster():
 
         # Parallel execution
         #results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
-        results = [blast(record) for record in records]
-        
+        results = [blast(record, 'blastn', database) for record in records]
+
         # Output all results to a file single-threaded
         with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
             for result in results:
