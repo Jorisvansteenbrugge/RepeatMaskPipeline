@@ -26,8 +26,9 @@ class Blaster():
         records = list(SeqIO.parse(fasta_file, 'fasta'))
 
         # Parallel execution
-        results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
-
+        #results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
+        results = [blast(record) for record in records]
+        
         # Output all results to a file single-threaded
         with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
             for result in results:
@@ -57,12 +58,12 @@ def blast(record, blast_type, database = 'nr', remote = "-remote"):
     blast_out = blast.out.decode()
     if "Sequences producing significant alignments:" in blast_out:
         print("SIGNIFICANT RESULT FOUND FOR {}".format(record.id))
-        return [record.id, 1]
+        return (record.id, 1)
     elif "***** No hits found *****":
         print("NO HITS FOR {}".format(record.id))
-        return [record.id, 0]
+        return (record.id, 0)
     else:
-        return [record.id, 0]
+        return (record.id, 0)
 
 
 
