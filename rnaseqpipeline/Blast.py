@@ -32,7 +32,7 @@ class Blaster():
         with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
             for result in results:
                 print(result.decode())
-                print("\n\n")
+                print("\nJORIS TIME\n")
                  # TODO: FIgure out what I want to do with the outputs
                  # Do we store them in memory / in file/ both?
                 # out_file.write(result)
