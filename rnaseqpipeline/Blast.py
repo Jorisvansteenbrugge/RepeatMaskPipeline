@@ -34,7 +34,7 @@ class Blaster():
                 print(result.decode())
                 print("\n\n")
                  # TODO: FIgure out what I want to do with the outputs
-                 # Do we store them in memory/ in file/ both?
+                 # Do we store them in memory / in file/ both?
                 # out_file.write(result)
                 # out_file.write("\n")
 
