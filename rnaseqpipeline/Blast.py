@@ -31,7 +31,7 @@ class Blaster():
         # Output all results to a file single-threaded
         with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
             for result in results:
-                print(result.decode())
+                print(result)
                 print("\nJORIS TIME\n")
                  # TODO: FIgure out what I want to do with the outputs
                  # Do we store them in memory / in file/ both?
@@ -41,6 +41,9 @@ class Blaster():
 
 
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
+    """Do a blast search and return wether a significant hit was found
+
+    """
     if remote == '-remote':
         wait_time = random.randint(1, 10)
         time.sleep(wait_time) # Make sure we don't spam the NCBI servers all at once
@@ -49,5 +52,17 @@ def blast(record, blast_type, database = 'nr', remote = "-remote"):
     blast_cmd = "{0} -db {1} {2} -query - ".format(blast_type, database, remote)
 
     p = sp.Popen(blast_cmd, stdin = sp.PIPE, stdout = sp.PIPE, stderr = sp.PIPE, shell = True)
-    blast_out, err = p.communicate(input=str(record.seq).encode())
+    blast_out, err = p.communicate(input=str(record.seq).encode()).decode()
+
+    if "Sequences producing significant alignments:" in blast_out:
+        print("SIGNIFICANT RESULT FOUND FOR {}".format(record.id))
+        return [record.id, 1]
+    elif "***** No hits found *****":
+        print("NO HITS FOR {}".format(record.id))
+        return [record.id, 0]
+    else:
+        return [record.id, 0]
+
+
+
     return blast_out
