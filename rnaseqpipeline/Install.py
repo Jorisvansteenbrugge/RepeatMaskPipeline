@@ -270,7 +270,7 @@ class Install():
                 print ("Skipping RNAmmer (Already installed)")
                 retur
 
-            print("Installing RNAmmer")
+            print_pass("Installing RNAmmer")
 
             sp.call("cp /home/steen176/tools/dontmove/rnammer.tar.gz {0}; cd {0}; tar xf rnammer.tar.gz".format(options.install_dir),
                 shell = True, stdout = out_file, stderr = err_file)
@@ -287,13 +287,13 @@ class Install():
                 options.install_dir
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
-                
+
         def Maker2():
             if verify_installation('maker', 'ERROR: Control files not found'):
                 print("Skipping Maker (Already installed)")
                 return
 
-            print("Installing Maker2")
+            print_pass("Installing Maker2")
 
             conda_channel = "conda config --add channels {}"
             sp.call(conda_channel.format('bioconda'),
@@ -302,16 +302,55 @@ class Install():
                     shell = True,  stdout=out_file, stderr = err_file)
             sp.call(conda_channel.format('WURnematology'),
                     shell = True,  stdout=out_file, stderr = err_file)
-            sp.call("conda install -y tandemrepeatfinder",
+            sp.call("conda install -y maker",
                     shell = True,  stdout=out_file, stderr = err_file)
 
 
         def Braker2():
-            pass
+            print_pass("Install Braker2")
+
+            def GeneMark():
+                if verify_installation('get_sequence_from_GTF.pl', 'Usage:  <gene coordinates in GTF>  <sequence in FASTA>'):
+                    print("    Skipping GeneMark (Already Installed)")
+                    return
+
+
+                print("    Installing GeneMark")
+                sp.call("cp /home/steen176/tools/dontmove/genemark/gm_et_linux_64 {}/genemark".format(options.install_dir),
+                    shell = True)
+                sp.call("echo \'# GeneMark ET installation dir\' >> ~/.bashrc; echo \'export PATH={}/genemark:$PATH\' >> ~/.bashrc".format(options.install_dir),
+                    shell = True)
+
+            GeneMark()
+
+            if verify_installation("braker.pl", "Pipeline for predicting genes with GeneMark-ET and AUGUSTUS"):
+                print("    Skipping Braker (Already installed)")
+                return
+            #Actual installation
+            sp.call("wget http://exon.gatech.edu/Braker/BRAKER2.tar.gz -O {0}/BRAKER2.tar.gz; cd {0} tar xf BRAKER2.tar.gz".format(options.install_dir),
+                shell = True)
+
+
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Scalar::Util::Numeric)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Spec::FUnctions)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Hash::Merge)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(List::Util)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Logger::Simple)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Load::Conditional)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Parallel::ForkManager)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(POSIX)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(YAML)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which module)'", shell = True)
+
+
+            sp.call("echo \'# BRAKER2 Installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}/BRAKER_v2.1.0\' >>  ~/.bashrc".format(options.install_dir),
+                shell = True)
 
         RepeatModeler()
         RNAmmer()
         Maker2()
+        Braker2()
+
 
 
 def verify_installation(command, required_out):
