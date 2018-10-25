@@ -262,12 +262,21 @@ class Install():
                 shell = True,  stdout=out_file, stderr = err_file)
 
         def RNAmmer():
-            """This will only installon one of the bioinformatics servers, as therefore
+            """This will only install on one of the bioinformatics servers, as therefore
             software is only deployable within the institution. Othewise you have
             to download a copy manually
             """
-            sp.call("mkdir {0}/rnammer; cp /home/steen176/tools/rnammer-1.2.src.tar.Z {0}/rnammer; cd {0}/rnammer; tar xf rnammer-1.2.src.tar.Zvim".format(options.install_dir),
+            if verify_installation('')
+
+            sp.call("cp /home/steen176/tools/dontmove/rnammer.tar.gz {0}; cd {0}; tar xf rnammer.tar.gz".format(options.install_dir),
                 shell = True, stdout = out_file, stderr = err_file)
+
+
+            #sed_cmd = "sed -i 's+$path = \"\";+$path = {0}/RECON-1.08/bin+g' {0}/RECON-1.08/scripts/recon.pl".format(
+            #    options.install_dir)
+
+            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/rnammer+g\" {0}/rnammer/rnammer ".format(options.install_dir),
+                shell = True)
 
 
             sp.call("echo \'# rnammer installation dir\' >> ~/.bashrc; echo \'export PATH={}/rnammer:$PATH\' >> ~/.bashrc".format(
@@ -275,6 +284,9 @@ class Install():
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
         def Maker2():
+            if verify_installation('maker', 'ERROR: Control files not found'):
+                print("    Skipping Maker (Already installed)")
+                return
 
             conda_channel = "conda config --add channels {}"
             sp.call(conda_channel.format('bioconda'),
@@ -286,7 +298,13 @@ class Install():
             sp.call("conda install -y tandemrepeatfinder",
                     shell = True,  stdout=out_file, stderr = err_file)
 
+
+        def Braker2()
+
         RepeatModeler()
+        RNAmmer()
+        Maker2()
+
 
 def verify_installation(command, required_out):
     import subprocess as sp
