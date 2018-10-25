@@ -20,7 +20,6 @@ class Blaster():
                 n_threads  -- int, number of parallel blast threads to use.
                 database   -- str, blast database to use, may either be a standard (remote) database or a local one.
                 remote     -- str, argument to indicate if the blast database is remote. Argument should either be "-remote" or ""
-
         """
         # Parse the fast file
         records = list(SeqIO.parse(fasta_file, 'fasta'))
