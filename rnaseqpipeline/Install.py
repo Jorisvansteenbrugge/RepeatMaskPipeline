@@ -340,7 +340,7 @@ class Install():
             sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Parallel::ForkManager)'", shell = True)
             sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(POSIX)'", shell = True)
             sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(YAML)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which module)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which)'", shell = True)
 
 
             sp.call("echo \'# BRAKER2 Installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}/BRAKER_v2.1.0\' >>  ~/.bashrc".format(options.install_dir),
