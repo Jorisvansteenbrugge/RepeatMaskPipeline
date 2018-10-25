@@ -287,6 +287,7 @@ class Install():
                 options.install_dir
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
+                
         def Maker2():
             if verify_installation('maker', 'ERROR: Control files not found'):
                 print("Skipping Maker (Already installed)")
@@ -305,7 +306,8 @@ class Install():
                     shell = True,  stdout=out_file, stderr = err_file)
 
 
-        def Braker2()
+        def Braker2():
+            pass
 
         RepeatModeler()
         RNAmmer()
