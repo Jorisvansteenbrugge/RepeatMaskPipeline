@@ -266,7 +266,11 @@ class Install():
             software is only deployable within the institution. Othewise you have
             to download a copy manually
             """
-            if verify_installation('rnammer -v', "This rnammer 1.2")
+            if verify_installation('rnammer -v', "This rnammer 1.2"):
+                print ("Skipping RNAmmer (Already installed)")
+                retur
+
+            print("Installing RNAmmer")
 
             sp.call("cp /home/steen176/tools/dontmove/rnammer.tar.gz {0}; cd {0}; tar xf rnammer.tar.gz".format(options.install_dir),
                 shell = True, stdout = out_file, stderr = err_file)
@@ -285,8 +289,10 @@ class Install():
                 shell = True,  stdout=out_file, stderr = err_file)
         def Maker2():
             if verify_installation('maker', 'ERROR: Control files not found'):
-                print("    Skipping Maker (Already installed)")
+                print("Skipping Maker (Already installed)")
                 return
+
+            print("Installing Maker2")
 
             conda_channel = "conda config --add channels {}"
             sp.call(conda_channel.format('bioconda'),
