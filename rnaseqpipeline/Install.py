@@ -347,9 +347,9 @@ class Install():
                 shell = True)
 
         RepeatModeler()
-        RNAmmer()
-        Maker2()
-        Braker2()
+        #RNAmmer()
+        #Maker2()
+        #Braker2()
 
 
 
