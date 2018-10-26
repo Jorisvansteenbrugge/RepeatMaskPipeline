@@ -268,7 +268,7 @@ class Install():
             """
             if verify_installation('rnammer -v', "This rnammer 1.2"):
                 print ("Skipping RNAmmer (Already installed)")
-                retur
+                return
 
             print_pass("Installing RNAmmer")
 
