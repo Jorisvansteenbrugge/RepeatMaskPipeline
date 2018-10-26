@@ -7,7 +7,7 @@ from rnaseqpipeline.Run import Run
 
 
 def arguments():
-    p = argparse.ArgumentParser(prog= "RNAseq Pipeline",
+    p = argparse.ArgumentParser(prog= "annotation_pipeline",
         formatter_class = argparse.RawTextHelpFormatter,
         epilog = textwrap.dedent('''\
             Authors:
