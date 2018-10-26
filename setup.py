@@ -9,5 +9,5 @@ setup(
         packages         = find_packages(),
         description      = 'WUR nematology Annotation Pipeline',
         scripts          = ['scripts/annotation_pipeline', 'scripts/fastaSplitter'],
-        install_requires = ['joblib'],
+        install_requires = ['joblib', 'biopython'],
         )
