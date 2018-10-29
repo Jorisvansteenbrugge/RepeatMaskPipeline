@@ -53,7 +53,7 @@ def lookup_progress(options):
             else: # RepeatModeler was not finished running
                 return 0
 
-            return return_table[file_contenttwi[-1][0]]
+            return return_table[file_content[-1][0]]
 
     except FileNotFoundError:
         # TODO: Create the file
