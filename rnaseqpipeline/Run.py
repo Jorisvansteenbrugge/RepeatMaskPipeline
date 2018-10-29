@@ -186,7 +186,7 @@ def RepeatMasker(options):
     """Mask repeat sequences without blast hits
     """
 
-    mask_cmd = "cd {0}; RepeatMasker -lib {2}/consensi.fa.classified -pa {2} -gff -xsmall genome.fa".format(
+    mask_cmd = "cd {0}; RepeatMasker -lib {1}/consensi.fa.classified -pa {2} -gff -xsmall genome.fa".format(
         options.workdir, repeatmodeler_dir, options.n_threads)
 
     call_sp(mask_cmd)
