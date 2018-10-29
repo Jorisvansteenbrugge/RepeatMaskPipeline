@@ -54,7 +54,7 @@ def blast(record, blast_type, database = 'nr', remote = "-remote"):
     p = sp.Popen(blast_cmd, stdin = sp.PIPE, stdout = sp.PIPE, stderr = sp.PIPE, shell = True)
     blast_out, err = p.communicate(input=str(record.seq).encode())
 
-    blast_out = blast.out.decode()
+    blast_out = blast_out.decode()
     if "Sequences producing significant alignments:" in blast_out:
         print("SIGNIFICANT RESULT FOUND FOR {}".format(record.id))
         return (record.id, 1)
