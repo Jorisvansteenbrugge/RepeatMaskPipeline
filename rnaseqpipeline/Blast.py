@@ -27,24 +27,20 @@ class Blaster():
         # Parallel execution
         #results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
         results = [blast(record, 'blastn', database) for record in records]
+        no_hit_ids = [result[0] for result in results if result[1] == 0 ]
 
-        filter_records(results[0], records)
+        records_keep = filter_records(no_hit_ids, records)
 
-        # # Output all results to a file single-threaded
-        # with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
-        #     for result in results:
-        #         print(result)
-        #         print("\nJORIS TIME\n")
-                 # TODO: FIgure out what I want to do with the outputs
-                 # Do we store them in memory / in file/ both?
-                # out_file.write(result)
-                # out_file.write("\n")
+        # Write the remaining (unaligned records) back to the file
+        SeqIO.write(records_keep, fasta_file, 'fasta')
 
 
-def filter_records(verdict, records):
+
+def filter_records(no_hit_ids, records):
     for record in records:
-        if record.id == verdict[0]:
-            print("y")
+        if record.id in no_hit_ids:
+            yield record
+
 
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
     """Do a blast search and return wether a significant hit was found
