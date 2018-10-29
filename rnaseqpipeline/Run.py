@@ -6,7 +6,8 @@ class Run():
     def run_all(options):
 
 
-        func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM, blastRetro]
+        func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM,
+                         blastRetro, RepeatMasker]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
@@ -33,6 +34,7 @@ def lookup_progress(options):
                     "BlastNR"       : 3,
                     "BlastRFAM"     : 4,
                     "BlastRetro"    : 5,
+                    "RepeatMasker"  : 6,
 
                    }
 
@@ -178,3 +180,19 @@ def blastRetro(options):
     # write progress report
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("BlastRetro\t1\n")
+
+
+def RepeatMasker(options):
+    """Mask repeat sequences without blast hits
+    """
+
+    mask_cmd = "RepeatMasker -lib {0}/consensi.fa.classified -pa {1} -gff -xsmall {2}".format(
+        repeatmodeler_dir, options.n_threads, options.assembly)
+
+    call_sp(mask_cmd)
+
+    # write progress report
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("RepeatMasker\t1\n")
+
+        
