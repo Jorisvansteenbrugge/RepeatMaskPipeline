@@ -71,8 +71,7 @@ def RepeatModeler(options):
     global repeatmodeler_dir
     # Prepare and Build Genome database
     prepare_cmd = "cp {} {}/genome.fa".format(options.assembly, options.workdir)
-    build_cmd = "cd {}; BuildDatabase -engine ncbi -n \"genome_db\" {}".format(options.workdir,
-                                                                               options.assembly)
+    build_cmd = "cd {}; BuildDatabase -engine ncbi -n \"genome_db\" genome.fa".format(options.workdir)
     call_sp(prepare_cmd)
     call_sp(build_cmd)
 
