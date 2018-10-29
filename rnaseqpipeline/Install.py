@@ -188,7 +188,11 @@ class Install():
                 sp.call('cd {}/RepeatMasker ; for i in *; do sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" $i; done'.format(options.install_dir),
                     shell = True, stdout = out_file, stderr = err_file)
 
-
+                # Configure rmbblast databases
+                sp.call('cd {}; ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype nucl -in RepeatMasker/Libraries/RepeatMasker.lib'.format(options.install_dir),
+                    shell = True, stdout = out_file, stderr = err_file)
+                sp.call('cd {}; ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype prot -in RepeatMasker/Libraries/RepeatPeps.lib'.format(options.install_dir),
+                    shell = True, stdout = out_file, stderr = err_file)
 
                 sp.call("echo \'# RepeatMasker install dir\' >> ~/.bashrc ; echo \'export PATH={}/RepeatMasker:$PATH\' >> ~/.bashrc".format(
                     options.install_dir
