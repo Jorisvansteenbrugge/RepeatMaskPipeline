@@ -132,10 +132,13 @@ def blastRFAM(options):
     n_threads  = 6 if options.n_threads > 6 else options.n_threads
 
 
-    # we have to download the database....
-    call_sp('cd {}; mkdir rfamDB; cd rfamDB; wget -c ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.0/fasta_files/*'.format(
-        options.workdir))
-    call_sp("cd {}/rfamDB; gunzip *; cat *.fa > rfamDB.fa; makeblastdb -dbtype nucl -in rfamDB.fa".format(options.workdir))
+    try:
+        open("{}/rfamDB/rfamDB.fa".format(options.workdir))
+    except FileNotFoundError:
+        # we have to download the database....
+        call_sp('cd {}; mkdir rfamDB; cd rfamDB; wget -c ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.0/fasta_files/*'.format(
+            options.workdir))
+        call_sp("cd {}/rfamDB; gunzip *; cat *.fa > rfamDB.fa; makeblastdb -dbtype nucl -in rfamDB.fa".format(options.workdir))
 
     Blaster.blastFasta(fasta_file = fasta_file,
                        blast_type = 'blastn',
