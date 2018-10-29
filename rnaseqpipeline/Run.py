@@ -6,7 +6,7 @@ class Run():
     def run_all(options):
 
 
-        func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM, blastRetro]
+        func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM]#, blastRetro]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
@@ -107,6 +107,7 @@ def blastNR(options):
     """Blast the entries in the  RepeatModeler fasta file to the NCBI nr database.
     The results are written to a file named blast output
     """
+    print("Blast NR")
     fasta_file = "{}/consensi.fa.classified".format(repeatmodeler_dir)
     out_dir    = "{}/blastResults/NR".format(options.workdir)
     n_threads  = 6 if options.n_threads > 6 else options.n_threads
@@ -126,19 +127,26 @@ def blastRFAM(options):
     """
     print("Blast RFAM")
     fasta_file = "{}/consensi.fa.classified".format(repeatmodeler_dir)
-    out_dir    = "{}/blastResults/NR".format(options.workdir)
+    db         = "{}/rfamDB/rfamDB.fa".format(options.workdir)
+    out_dir    = "{}/blastResults/RFAM".format(options.workdir)
     n_threads  = 6 if options.n_threads > 6 else options.n_threads
 
 
     # we have to download the database....
-    call_sp('cd {}; wget -c ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.0/fasta_files/*'.format(
+    call_sp('cd {}; mkdir rfamDB; cd rfamDB; wget -c ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.0/fasta_files/*'.format(
         options.workdir))
+    call_sp("cd {}/rfamDB; gunzip *; cat *.fa > rfamDB.fa; makeblastdb -dbtype nucl -in rfamDB.fa".format(options.workdir))
 
     Blaster.blastFasta(fasta_file = fasta_file,
                        blast_type = 'blastn',
                        n_threads  = n_threads,
                        out_dir    = out_dir,
-                       database   = "nr")
+                       database   = db)
+    print("RFAM done")
+
+    # write progress report
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("BlastRFAM\t1\n")
 
 def blastRetro(options):
     """Blast the entries in the  RepeatModeler fasta file to the NCBI nr database.
@@ -153,3 +161,6 @@ def blastRetro(options):
                        n_threads  = n_threads,
                        out_dir    = out_dir,
                        database   = "nr")
+    # write progress report
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("BlastRetro\t1\n")
