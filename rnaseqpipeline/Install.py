@@ -174,7 +174,7 @@ class Install():
                     shell = True)
 
                 # Configure the program
-                sp.call("sed -i \"s+/usr/local/rmblast+{0}/ncbi-blast-2.6.0+-src/bin/+g\" {0}/RepeatMasker/RepeatMaskerConfig.pm ".format(options.install_dir))
+                sp.call("sed -i \'s,/usr/local/rmblast,{0}/ncbi-blast-2.6.0+-src/bin/,g\' {0}/RepeatMasker/RepeatMaskerConfig.pm ".format(options.install_dir))
 
 
 
