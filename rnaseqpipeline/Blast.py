@@ -27,7 +27,11 @@ class Blaster():
         # Parallel execution
         #results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
         results = [blast(record, 'blastn', database) for record in records]
+        print("Results: ")
+        print(results)
         no_hit_ids = [result[0] for result in results if result[1] == 0 ]
+        print("Hit ids")
+        print(no_hit_ids)
 
         records_keep = filter_records(no_hit_ids, records)
 
