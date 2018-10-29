@@ -185,6 +185,9 @@ class Install():
                     shell = True)
 
 
+                sp.call('cd {}/RepeatMasker ; for i in *; do sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" $i; done'.format(options.install_dir),
+                    shell = True, stdout = out_file, stderr = err_file)
+
 
 
                 sp.call("echo \'# RepeatMasker install dir\' >> ~/.bashrc ; echo \'export PATH={}/RepeatMasker:$PATH\' >> ~/.bashrc".format(
