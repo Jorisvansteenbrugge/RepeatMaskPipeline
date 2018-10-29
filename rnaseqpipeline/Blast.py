@@ -11,8 +11,10 @@ import time
 class Blaster():
 
 
-    def filter_records(verdicts, records):
-        pass
+    def filter_records(verdict, records):
+        for record in records:
+            if record.id == verdict[0]:
+                print("y")
 
     def blastFasta(fasta_file, blast_type, n_threads, out_dir, database = 'nr', remote = '-remote'):
         """Blast all records in a fasta fileself.
@@ -32,11 +34,13 @@ class Blaster():
         #results = Parallel(n_jobs = n_threads)(delayed(blast) (i, blast_type, database) for i in records)
         results = [blast(record, 'blastn', database) for record in records]
 
-        # Output all results to a file single-threaded
-        with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
-            for result in results:
-                print(result)
-                print("\nJORIS TIME\n")
+        filter_records(results[0], records)
+
+        # # Output all results to a file single-threaded
+        # with open('{}/blast{}_output.txt'.format(out_dir, database), 'w') as out_file:
+        #     for result in results:
+        #         print(result)
+        #         print("\nJORIS TIME\n")
                  # TODO: FIgure out what I want to do with the outputs
                  # Do we store them in memory / in file/ both?
                 # out_file.write(result)
