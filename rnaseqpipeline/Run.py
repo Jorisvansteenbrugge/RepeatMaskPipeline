@@ -7,7 +7,7 @@ class Run():
 
 
         func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM,
-                         blastRetro, RepeatMasker]
+                         blastRetro, RepeatMasker, rnammer]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
@@ -35,7 +35,7 @@ def lookup_progress(options):
                     "BlastRFAM"     : 4,
                     "BlastRetro"    : 5,
                     "RepeatMasker"  : 6,
-
+                    "rnammer"       : 7,
                    }
 
     global progress_file_path
@@ -193,3 +193,12 @@ def RepeatMasker(options):
     # write progress report
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("RepeatMasker\t1\n")
+
+def rnammer(options):
+    """Run rnammer
+    """
+    prep_cmd = "cd {}; mkdir rnammer; ln -s genome.fa.masked rnammer/genome.fa.masked".format(options.workdir)
+    rnammer_cmd = "cd {}/rnammer; rnammer -S euk -m lsu,ssu,tsu -gff genome.masked.rnammer.gff -h genome.masked.rnammer.hmmreport -f genome.masked.rnammer.fa genome.fa.masked ".format(options.workdir)
+
+    call_sp(prep_cmd)
+    call_sp(rnammer_cmd)
