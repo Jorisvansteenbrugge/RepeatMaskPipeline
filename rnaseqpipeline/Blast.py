@@ -10,6 +10,10 @@ import time
 
 class Blaster():
 
+
+    def filter_records(verdicts, records):
+        pass
+
     def blastFasta(fasta_file, blast_type, n_threads, out_dir, database = 'nr', remote = '-remote'):
         """Blast all records in a fasta fileself.
         Blasting can be done parallelized, to reduce execution times (recommended is not to use to many threads).
@@ -56,10 +60,8 @@ def blast(record, blast_type, database = 'nr', remote = "-remote"):
 
     blast_out = blast_out.decode()
     if "Sequences producing significant alignments:" in blast_out:
-        print("SIGNIFICANT RESULT FOUND FOR {}".format(record.id))
         return (record.id, 1)
     elif "***** No hits found *****":
-        print("NO HITS FOR {}".format(record.id))
         return (record.id, 0)
     else:
         return (record.id, 0)
