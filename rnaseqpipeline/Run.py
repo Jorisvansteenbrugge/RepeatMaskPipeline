@@ -165,7 +165,7 @@ def blastRetro(options):
     # We have to download the database..
     call_sp("cd {0}; mkdir retroDB; cd retroDB; wget http://botserv2.uzh.ch/kelldata/trep-db/downloads/trep-db_complete_Rel-16.fasta.gz -O retroDB.fa.gz; gunzip retroDB.fa.gz".format(
         options.workdir))
-    call_sp("cd {}/retroDB; makeblastdb -i retroDB.fa -dbtype nucl")
+    call_sp("cd {}/retroDB; makeblastdb -i retroDB.fa -dbtype nucl".format(options.workdir))
 
     db = "{}/retroDB/retroDB.fa".format(options.workdir)
 
