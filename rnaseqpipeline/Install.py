@@ -171,18 +171,18 @@ class Install():
 
 
                 sp.call('cp  {0}/RepeatMasker/RepeatMaskerConfig.tmpl {0}/RepeatMasker/RepeatMaskerConfig.pm'.format(options.install_dir),
-                    shell = True)
+                    shell = True,  stdout=out_file, stderr = err_file)
 
                 # Configure the program
 
                 # RMBLAST
                 sp.call("sed -i \'s,/usr/local/rmblast,{0}/ncbi-blast-2.6.0+-src/bin/,g\' {0}/RepeatMasker/RepeatMaskerConfig.pm ".format(options.install_dir),
-                    shell = True)
+                    shell = True,  stdout=out_file, stderr = err_file)
                 sp.call("sed -i 's,$DEFAULT_SEARCH_ENGINE = \"crossmatch\";,$DEFAULT_SEARCH_ENGINE = \"ncbi\";,g' tools/RepeatMasker/RepeatMaskerConfig.pm",
-                    shell = True)
+                    shell = True,  stdout=out_file, stderr = err_file)
 
                 sp.call('sed -i "s,$TRF_PRGM = \"\";,$TRF_PRGM = \"$(which trf409.linux64)\";,g" tools/RepeatMasker/RepeatMaskerConfig.pm',
-                    shell = True)
+                    shell = True,  stdout=out_file, stderr = err_file)
 
 
                 sp.call('cd {}/RepeatMasker ; for i in *; do sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" $i; done'.format(options.install_dir),
@@ -196,12 +196,18 @@ class Install():
                     shell = True,  stdout=out_file, stderr = err_file)
 
 
-                sp.call("wget -O- http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib", shell = True)
-                sp.call("eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`", shell = True)
-                sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc", shell = True)
-                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'", shell = True)
-                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'", shell = True)
-                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Util)'", shell = True)
+                sp.call("wget -O- http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib",
+                    shell = True,  stdout=out_file, stderr = err_file)
+                sp.call("eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`",
+                    shell = True,  stdout=out_file, stderr = err_file)
+                sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc",
+                    shell = True,  stdout=out_file, stderr = err_file)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'",
+                    shell = True,  stdout=out_file, stderr = err_file)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'",
+                    shell = True,  stdout=out_file, stderr = err_file)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Util)'",
+                    shell = True,  stdout=out_file, stderr = err_file)
 
             def NSEG():
                 if verify_installation('nseg', "Usage:"):
@@ -210,7 +216,8 @@ class Install():
 
                 sp.call("mkdir {0}/nseg; cd {0}/nseg; wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/*".format(options.install_dir),
                     shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("cd {}/nseg; make".format(options.install_dir), shell = True,  stdout=out_file, stderr = err_file)
+                sp.call("cd {}/nseg; make".format(options.install_dir),
+                    shell = True,  stdout=out_file, stderr = err_file)
                 sp.call("echo \'# NSEG installation dir\' >> ~/.bashrc; echo \'export PATH={}/nseg:$PATH\' >> ~/.bashrc".format(
                     options.install_dir
                 ),
