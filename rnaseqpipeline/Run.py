@@ -70,7 +70,7 @@ def call_sp_retrieve(command):
 def RepeatModeler(options):
     global repeatmodeler_dir
     # Prepare and Build Genome database
-    prepare_cmd = "cp {} {}".format(options.assembly, options.workdir)
+    prepare_cmd = "cp {} {}/genome.fa".format(options.assembly, options.workdir)
     build_cmd = "cd {}; BuildDatabase -engine ncbi -n \"genome_db\" {}".format(options.workdir,
                                                                                options.assembly)
     call_sp(prepare_cmd)
@@ -186,13 +186,11 @@ def RepeatMasker(options):
     """Mask repeat sequences without blast hits
     """
 
-    mask_cmd = "RepeatMasker -lib {0}/consensi.fa.classified -pa {1} -gff -xsmall {2}".format(
-        repeatmodeler_dir, options.n_threads, options.assembly)
+    mask_cmd = "cd {0}; RepeatMasker -lib {2}/consensi.fa.classified -pa {2} -gff -xsmall genome.fa".format(
+        options.workdir, repeatmodeler_dir, options.n_threads)
 
     call_sp(mask_cmd)
 
     # write progress report
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("RepeatMasker\t1\n")
-
-        
