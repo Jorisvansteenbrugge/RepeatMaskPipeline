@@ -47,8 +47,12 @@ def lookup_progress(options):
 
             if 'RepeatModeler' in names:
                 print("IN THERE")
-            repeatmodeler_dir = file_content[0][1]
-            return 2
+                repeatmodeler_dir = file_content[0][1]
+            else: # RepeatModeler was not finished running
+                return 0
+
+            return return_table[file_content[-1][1]]
+
     except FileNotFoundError:
         # TODO: Create the file
         open(progress_file_path, 'w')
