@@ -168,22 +168,16 @@ class Install():
                 sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
                         shell = True,  stdout=out_file, stderr = err_file)
 
-                # By default, the configure script requires manual input for different configuration steps,
-                # This is annoying in a headless installation (such as this one) therefore I modified the original
-                # one so it doesn't require the manual input.
-                # Download that now:
-                sp.call(["wget", "http://www.bioinformatics.nl/~steen176/repeatmask_config", # Rreplace with actual URL
-                "-O", "{}/RepeatMasker_CONFIG".format(options.install_dir)
-                        ],  stdout=out_file, stderr = err_file)
 
-                # Now we need to update all the paths required relative to the installation directory
-                repeat_mask_cmd = "sed -i 's+ACTUALINSTALLDIR+{0}+g' {0}/RepeatMasker_CONFIG".format(
-                    options.install_dir
-                )
-                sp.call(repeat_mask_cmd, shell = True,  stdout=out_file, stderr = err_file)
 
-                sp.call('cd {}/RepeatMasker;cp ../RepeatMasker_CONFIG ./configure; perl configure '.format(options.install_dir),
-                        shell = True,  stdout=out_file, stderr = err_file)
+                sp.call('cp  {0}/RepeatMaskerConfig.tmpl {0}/RepeatMaskerConfig.pm'.format(options.install_dir),
+                    shell = True)
+
+                # Configure the program
+                sp.call("sed -i \"s+/usr/local/rmblast+{0}/ncbi-blast-2.6.0+-src/bin/+g\" {0}/RepeatMaskerConfig.pm ".format(options.install_dir))
+
+
+
 
                 sp.call("echo \'# RepeatMasker install dir\' >> ~/.bashrc ; echo \'export PATH={}/RepeatMasker:$PATH\' >> ~/.bashrc".format(
                     options.install_dir
