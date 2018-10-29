@@ -200,5 +200,6 @@ def rnammer(options):
     prep_cmd = "cd {}; mkdir rnammer; cp genome.fa.masked rnammer/genome.fa.masked".format(options.workdir)
     rnammer_cmd = "cd {}/rnammer; rnammer -S euk -m lsu,ssu,tsu -gff genome.masked.rnammer.gff -h genome.masked.rnammer.hmmreport -f genome.masked.rnammer.fa genome.fa.masked ".format(options.workdir)
 
+
     call_sp(prep_cmd)
-    call_sp(rnammer_cmd)
+    sp.call(rnammer_cmd)
