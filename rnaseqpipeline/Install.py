@@ -174,7 +174,14 @@ class Install():
                     shell = True)
 
                 # Configure the program
+
+                # RMBLAST
                 sp.call("sed -i \'s,/usr/local/rmblast,{0}/ncbi-blast-2.6.0+-src/bin/,g\' {0}/RepeatMasker/RepeatMaskerConfig.pm ".format(options.install_dir),
+                    shell = True)
+                sp.call("sed -i 's,$DEFAULT_SEARCH_ENGINE = \"crossmatch\";,$DEFAULT_SEARCH_ENGINE = \"ncbi\";,g' tools/RepeatMasker/RepeatMaskerConfig.pm",
+                    shell = True)
+
+                sp.call('sed -i "s,$TRF_PRGM = \"\";,$TRF_PRGM = \"$(which trf409.linux64)\";,g" tools/RepeatMasker/RepeatMaskerConfig.pm',
                     shell = True)
 
 
