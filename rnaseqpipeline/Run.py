@@ -138,7 +138,7 @@ def blastRFAM(options):
                        blast_type = 'blastn',
                        n_threads  = n_threads,
                        out_dir    = out_dir,
-                       database   = "nr)
+                       database   = "nr")
 
 def blastRetro(options):
     """Blast the entries in the  RepeatModeler fasta file to the NCBI nr database.
