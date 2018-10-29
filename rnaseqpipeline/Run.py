@@ -6,7 +6,7 @@ class Run():
     def run_all(options):
 
 
-        func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM]#, blastRetro]
+        func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM, blastRetro]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
@@ -57,11 +57,6 @@ def lookup_progress(options):
         # TODO: Create the file
         open(progress_file_path, 'w')
         return 0
-
-
-
-
-
 
 def call_sp(command):
     sp.call(command, shell = True)#, stdout = out_file, stderr = err_file)
@@ -160,15 +155,25 @@ def blastRetro(options):
     """Blast the entries in the  RepeatModeler fasta file to the NCBI nr database.
     The results are written to a file named blast output
     """
+
     fasta_file = "{}/consensi.fa.classified".format(repeatmodeler_dir)
-    out_dir    = "{}/blastResults/NR".format(options.workdir)
+    out_dir    = "{}/blastResults/retroDB".format(options.workdir)
     n_threads  = 6 if options.n_threads > 6 else options.n_threads
 
+
+
+    # We have to download the database..
+    call_sp("cd {0}; mkdir retroDB; cd retroDB; wget http://botserv2.uzh.ch/kelldata/trep-db/downloads/trep-db_complete_Rel-16.fasta.gz -O retroDB.fa.gz; gunzip retroDB.fa.gz".format(
+        options.workdir))
+    call_sp("cd {}/retroDB; makeblastdb -i retroDB.fa -dbtype nucl")
+
+    db = "{}/retroDB/retroDB.fa".format(options.workdir)
+
     Blaster.blastFasta(fasta_file = fasta_file,
-                       blast_type = 'blastn',
+                       blast_type = 'tblastx',
                        n_threads  = n_threads,
                        out_dir    = out_dir,
-                       database   = "nr",
+                       database   = db,
                        remote     = "")
     # write progress report
     with open(progress_file_path, 'a') as progress_file:
