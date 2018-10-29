@@ -37,9 +37,12 @@ class Blaster():
 
 
 def filter_records(no_hit_ids, records):
+
     for record in records:
         if record.id in no_hit_ids:
             yield record
+        else:
+            print(record.id)
 
 
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
