@@ -148,7 +148,8 @@ def blastRFAM(options):
                        blast_type = 'blastn',
                        n_threads  = n_threads,
                        out_dir    = out_dir,
-                       database   = db)
+                       database   = db,
+                       remote     = "")
     print("RFAM done")
 
     # write progress report
@@ -167,7 +168,8 @@ def blastRetro(options):
                        blast_type = 'blastn',
                        n_threads  = n_threads,
                        out_dir    = out_dir,
-                       database   = "nr")
+                       database   = "nr",
+                       remote     = "")
     # write progress report
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("BlastRetro\t1\n")
