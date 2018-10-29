@@ -10,12 +10,6 @@ import time
 
 class Blaster():
 
-
-    def filter_records(verdict, records):
-        for record in records:
-            if record.id == verdict[0]:
-                print("y")
-
     def blastFasta(fasta_file, blast_type, n_threads, out_dir, database = 'nr', remote = '-remote'):
         """Blast all records in a fasta fileself.
         Blasting can be done parallelized, to reduce execution times (recommended is not to use to many threads).
@@ -47,6 +41,10 @@ class Blaster():
                 # out_file.write("\n")
 
 
+def filter_records(verdict, records):
+    for record in records:
+        if record.id == verdict[0]:
+            print("y")
 
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
     """Do a blast search and return wether a significant hit was found
