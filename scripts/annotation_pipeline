@@ -14,7 +14,7 @@ def arguments():
             Authors:
                 Joris van Steenbrugge <joris.vansteenbrugge@wur.nl> - Method Implementation
                 Martijn Holterman <martijn.holterman@wur.nl> - Method
-            '''.format(version)))
+            '''))
 
     subparsers = p.add_subparsers(dest = 'command', help = 'Sub commands for the pipeline')
     subparsers.required = True
