@@ -148,10 +148,7 @@ class Install():
 
                 sp.call("conda install -y blast -c bioconda", shell = True,
                     stdout = out_file, stderr = err_file)
-                # Probably should not be added to the path
-                #sp.call("echo \'# RMBlast installation dir\' >> ~/.bashrc; echo \'export PATH={}:$PATH\' >> ~/.bashrc".format(
-                #    path
-                #), shell = True,  stdout=out_file, stderr = err_file)
+
 
 
 
@@ -295,7 +292,7 @@ class Install():
             #sed_cmd = "sed -i 's+$path = \"\";+$path = {0}/RECON-1.08/bin+g' {0}/RECON-1.08/scripts/recon.pl".format(
             #    options.install_dir)
 
-            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/rnammer+g\" {0}/rnammer/rnammer ".format(options.install_dir),
+            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/rnammer+g\" {0}/rnammer ".format(options.install_dir),
                 shell = True)
 
 
@@ -303,6 +300,11 @@ class Install():
                 options.install_dir
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
+
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Getopt::Long)'", shell = True)
+            sp.call("conda install -y tandemrepeatfinder -c bioconda",
+                    shell = True,  stdout=out_file, stderr = err_file)
+
 
         def Maker2():
             if verify_installation('maker', 'ERROR: Control files not found'):
@@ -356,7 +358,7 @@ class Install():
             sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Parallel::ForkManager)'", shell = True)
             sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(POSIX)'", shell = True)
             sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(YAML)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which module)'", shell = True)
+            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which)'", shell = True)
 
 
             sp.call("echo \'# BRAKER2 Installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}/BRAKER_v2.1.0\' >>  ~/.bashrc".format(options.install_dir),
