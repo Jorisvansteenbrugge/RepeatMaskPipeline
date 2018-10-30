@@ -2,8 +2,10 @@
 
 import argparse
 import textwrap
+from _version import __version__
 from rnaseqpipeline.Install import Install
 from rnaseqpipeline.Run import Run
+
 
 
 def arguments():
@@ -11,9 +13,9 @@ def arguments():
         formatter_class = argparse.RawTextHelpFormatter,
         epilog = textwrap.dedent('''\
             Authors:
-                Joris van Steenbrugge <joris.vansteenbrugge@wur.nl>
-                Martijn Holterman <martijn.holterman@wur.nl>
-            '''))
+                Joris van Steenbrugge <joris.vansteenbrugge@wur.nl> - Method Implementation
+                Martijn Holterman <martijn.holterman@wur.nl> - Method
+            '''.format(version)))
 
     subparsers = p.add_subparsers(dest = 'command', help = 'Sub commands for the pipeline')
     subparsers.required = True
