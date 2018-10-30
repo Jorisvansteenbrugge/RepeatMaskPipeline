@@ -2,7 +2,6 @@
 
 import argparse
 import textwrap
-from _version import __version__
 from rnaseqpipeline.Install import Install
 from rnaseqpipeline.Run import Run
 
