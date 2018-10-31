@@ -123,25 +123,17 @@ class Install():
                 sp.call("conda install -y gnutls",
                     shell = True, stdout = out_file, stderr = err_file)
 
-                cmd = "wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-src.tar.gz -O {}/ncbi-blast.tar.gz".format(
-                    options.install_dir)
-                sp.call(cmd,
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call('cd {}; tar xf ncbi-blast.tar.gz'.format(options.install_dir),
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call('wget -c http://www.repeatmasker.org/isb-2.6.0+-changes-vers2.patch.gz -O {}/isb-2.6.0+-changes-vers2.patch.gz'.format(
-                options.install_dir),
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call('gunzip -f {}/isb-2.6.0+-changes-vers2.patch.gz'.format(options.install_dir),
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("cd {}/ncbi-blast-2.6.0+-src ; patch -p1 < ../isb-2.6.0+-changes-vers2.patch".format(options.install_dir),
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; ./configure --with-mt --prefix={0}/ncbi-blast-2.6.0+-src/ --without-debug'.format(
-                  options.install_dir),
-                       shell = True,  stdout=out_file, stderr = err_file)
-                print("        compiling ncbi blast (this takes at least an hour)")
-                sp.call('cd {0}/ncbi-blast-2.6.0+-src/c++; make; make install'.format(options.install_dir),
-                       shell = True,  stdout=out_file, stderr = err_file)
+                #Download ncbiblast and RMBLAST
+                sp.call("cd {}; wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.28/ncbi-blast-2.2.28+-x64-linux.tar.gz; tar xf ncbi-blast-2.2.28+-x64-linux.tar.gz".format(
+                    options.install_dir), shell = True, stdout = out_file, stderr = err_file)
+
+                sp.call("cd {}; wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/rmblast/2.2.28/ncbi-rmblastn-2.2.28-x64-linux.tar.gz; tar xf ncbi-rmblastn-2.2.28-x64-linux.tar.gz".format(
+                    options.install_dir), shell = True, stdout = out_file, stderr = err_file)
+
+                sp.call("cd {}; cp -R ncbi-rmblastn-2.2.28/* ncbi-blast-2.2.28+/; rm -rf ncbi-rmblast-2.2.28; mv ncbi-blast-2.2.28+ ncbi-blast-2.6.0+-src")
+
+
+
 
                 path = "{0}/ncbi-blast-2.6.0+-src/bin".format(options.install_dir)
 
