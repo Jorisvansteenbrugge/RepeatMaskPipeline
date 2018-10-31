@@ -130,7 +130,8 @@ class Install():
                 sp.call("cd {}; wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/rmblast/2.2.28/ncbi-rmblastn-2.2.28-x64-linux.tar.gz; tar xf ncbi-rmblastn-2.2.28-x64-linux.tar.gz".format(
                     options.install_dir), shell = True, stdout = out_file, stderr = err_file)
 
-                sp.call("cd {}; cp -R ncbi-rmblastn-2.2.28/* ncbi-blast-2.2.28+/; rm -rf ncbi-rmblast-2.2.28; mv ncbi-blast-2.2.28+ ncbi-blast-2.6.0+-src")
+                sp.call("cd {}; cp -R ncbi-rmblastn-2.2.28/* ncbi-blast-2.2.28+/; rm -rf ncbi-rmblast-2.2.28; mv ncbi-blast-2.2.28+ ncbi-blast-2.6.0+-src".format(options.install_dir),
+                    shell = True, stdout = out_file, stderr = err_file)
 
 
 
