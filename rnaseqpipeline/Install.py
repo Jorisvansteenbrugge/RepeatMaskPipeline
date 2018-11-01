@@ -40,10 +40,11 @@ class Install():
             print("TandemRepeatFinder installed: {}".format(trf))
 
 
+            # TODO: options.install_dir is not available in this namespace
             #rmblast = False not in [verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error'),
             #                        verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/rmblastn'.format(options.install_dir),"BLAST query/options error")
             #                        ]
-            print("RMBlast installed: {}".format(rmblast))
+            #print("RMBlast installed: {}".format(rmblast))
 
 
 
