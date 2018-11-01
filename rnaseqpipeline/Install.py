@@ -73,20 +73,21 @@ class Install():
 
                 if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
 
-                    print_warn("RepeatMasker is trying to use a wrong (non-existing) perl interpreter. I will now try to fix it..")
+                    print_warn("    RepeatMasker is trying to use a wrong (non-existing) perl interpreter. I will now try to fix it..")
 
                     sp.call("cd {}/RepeatMasker/; for file in *;do sed -i \"s+\#\!/u1/local/bin/perl+$(which perl)+g\" $file; done",
-                            shell = True, stderr = err_file, stdout = out_file)
+                            shell = True)#, stderr = err_file, stdout = out_file)
                     if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
-                        print_fail("I wasn't able to fix it automatically, please manually run the configure script: {}/RepeatMasker/configure".format(options.install_dir))
+                        print_fail("    I wasn't able to fix it automatically, please manually run the configure script: {}/RepeatMasker/configure".format(options.install_dir))
+                        break
                     else:
-                        print_pass("RepeatMasker is now using the right perl interpreter")
+                        print_pass("    RepeatMasker is now using the right perl interpreter")
 
                 else:
-                    print_pass("RepeatMasker is using the right perl interpreter")
+                    print_pass("    RepeatMasker is using the right perl interpreter")
 
                 if not verify_installation('RepeatMasker', 'RepeatMasker version'):
-                    print_warn("RepeatMasker is still not working. I will work on a fix for this in a future release of the pipeline (perl libraries etc....)")
+                    print_fail("    RepeatMasker is still not working. I will work on a fix for this in a future release of the pipeline (perl libraries etc....)")
 
 
 
