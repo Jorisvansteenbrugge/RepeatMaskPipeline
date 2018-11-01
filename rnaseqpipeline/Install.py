@@ -95,8 +95,8 @@ class Install():
                 print_pass("    RepeatMasker Libraries are installed correctly")
             else:
                 print_warn("    The RepeatMasker libraries are not configured. I will try to generate them..")
-                sp.call("{0}/ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype nucl -in {0}/RepeatMasker/Libraries/RepeatMasker.lib > /dev/null 2>&1".format(options.install_dir), shell = True)
-                sp.call("{0}/ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype prot -in {0}/RepeatMasker/Libraries/RpeatPeps.lib > /dev/null 2>&1".format(options.install_dir), shell = True)
+                sp.call("{0}/ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype nucl -in {0}/RepeatMasker/Libraries/RepeatMasker.lib ".format(options.install_dir), shell = True)
+                sp.call("{0}/ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype prot -in {0}/RepeatMasker/Libraries/RpeatPeps.lib ".format(options.install_dir), shell = True)
 
                 if verify_installation("ls -1 {}/RepeatMasker/Libraries".format(options.install_dir), db_str):
                     print_pass("    RepeatMasker Libraries are now installed correctly")
