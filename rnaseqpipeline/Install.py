@@ -13,8 +13,9 @@ class Install():
             Keyword Arguments:
                 options -- argparse opject containing the command line arguments
         """
-        print('veryifying the installation is currently in development, don\'t expect good results')
+        print_bold('veryifying the installation is currently in development, don\'t expect good results')
 
+        import subprocess as sp
 
         def All(options):
             print("UNSUPPORTED -> use RepeatModeler")
@@ -478,3 +479,6 @@ def print_pass(message, end = '\n'):
 
 def print_warn(message, end = '\n'):
     sys.stderr.write('\x1b[1;33m' + message.strip() + '\x1b[0m' + end)
+
+def print_bold(message, end = '\n'):
+        sys.stdout.write('\x1b[1;37m' + message.strip() + '\x1b[0m' + end)
