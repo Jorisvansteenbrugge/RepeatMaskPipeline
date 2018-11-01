@@ -471,15 +471,15 @@ def verify_installation(command, required_out):
 
 import sys
 def print_fail(message, end = '\n'):
-    sys.stderr.write('\x1b[1;31m' + message.strip() + '\x1b[0m' + end)
+    sys.stderr.write('\x1b[1;31m' + message.rstrip() + '\x1b[0m' + end)
 
 
 def print_pass(message, end = '\n'):
-    sys.stdout.write('\x1b[1;32m' + message.strip() + '\x1b[0m' + end)
+    sys.stdout.write('\x1b[1;32m' + message.rstrip() + '\x1b[0m' + end)
 
 
 def print_warn(message, end = '\n'):
-    sys.stderr.write('\x1b[1;33m' + message.strip() + '\x1b[0m' + end)
+    sys.stderr.write('\x1b[1;33m' + message.rstrip() + '\x1b[0m' + end)
 
 def print_bold(message, end = '\n'):
-        sys.stdout.write('\x1b[1;37m' + message.strip() + '\x1b[0m' + end)
+        sys.stdout.write('\x1b[1;37m' + message.rstrip() + '\x1b[0m' + end)
