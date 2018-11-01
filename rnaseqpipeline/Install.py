@@ -79,7 +79,7 @@ class Install():
                             shell = True)#, stderr = err_file, stdout = out_file)
                     if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
                         print_fail("    I wasn't able to fix it automatically, please manually run the configure script: {}/RepeatMasker/configure".format(options.install_dir))
-                        break
+                        
                     else:
                         print_pass("    RepeatMasker is now using the right perl interpreter")
 
