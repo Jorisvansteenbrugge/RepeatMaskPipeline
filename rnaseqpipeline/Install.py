@@ -90,7 +90,7 @@ class Install():
                     print_fail("    RepeatMasker is still not working. I will work on a fix for this in a future release of the pipeline (perl libraries etc....)")
 
             # check RepeatMasker databases
-            db_str = 'DfamConsensus.embl\nDfam.hmm\nREADME.meta\nRepeatAnnotationData.pm\nRepeatPeps.lib\nRepeatPeps.lib.phr\nRepeatPeps.lib.pin\nRepeatPeps.lib.psq\nRepeatPeps.readme\nRMRBMeta.embl\ntaxonomy.dat\n'
+            db_str = 'DfamConsensus.embl\nDfam.hmm\nREADME.meta\nRepeatAnnotationData.pm\nRepeatMasker.lib\nRepeatMaskerLib.embl\nRepeatMasker.lib.nhr\nRepeatMasker.lib.nin\nRepeatMasker.lib.nsq\nRepeatPeps.lib\nRepeatPeps.lib.phr\nRepeatPeps.lib.pin\nRepeatPeps.lib.psq\nRepeatPeps.readme\nRMRBMeta.embl\ntaxonomy.dat\n'
             if verify_installation("ls -1 {}/RepeatMasker/Libraries".format(options.install_dir), db_str):
                 print_pass("    RepeatMasker Libraries are installed correctly")
             else:
