@@ -65,6 +65,9 @@ class Install():
             if repeatmasker_install:
                 print_pass(msg)
 
+            else:
+                print_fail(msg)
+
                 repeatmasker_config_interpreter_cmd  = 'head -n1 {}/RepeatMasker/RepeatMasker'.format(options.install_dir)
 
                 if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
@@ -81,9 +84,8 @@ class Install():
                 else:
                     print_pass("RepeatMasker is using the right perl interpreter")
 
-            else:
-                print_fail(msg)
-                print_warn("I will work on a fix for this in a future release of the pipeline (perl libraries etc....)")
+                if not verify_installation('RepeatMasker', 'RepeatMasker version'):
+                    print_warn("RepeatMasker is still not working. I will work on a fix for this in a future release of the pipeline (perl libraries etc....)")
 
 
 
