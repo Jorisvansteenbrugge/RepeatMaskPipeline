@@ -75,11 +75,11 @@ class Install():
 
                     print_warn("    RepeatMasker is trying to use a wrong (non-existing) perl interpreter. I will now try to fix it..")
 
-                    sp.call("cd {}/RepeatMasker/; for file in *;do sed -i \"s+\#\!/u1/local/bin/perl+$(which perl)+g\" $file; done",
+                    sp.call("cd {}/RepeatMasker/; for file in *;do sed -i \"s+\#\!/u1/local/bin/perl+$(which perl)+g\" $file; done".format(options.install_dir),
                             shell = True)#, stderr = err_file, stdout = out_file)
                     if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
                         print_fail("    I wasn't able to fix it automatically, please manually run the configure script: {}/RepeatMasker/configure".format(options.install_dir))
-                        
+
                     else:
                         print_pass("    RepeatMasker is now using the right perl interpreter")
 
