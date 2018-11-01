@@ -40,9 +40,9 @@ class Install():
             print("TandemRepeatFinder installed: {}".format(trf))
 
 
-            rmblast = False not in [verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error'),
-                                    verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/rmblastn'.format(options.install_dir),"BLAST query/options error")
-                                    ]
+            #rmblast = False not in [verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error'),
+            #                        verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/rmblastn'.format(options.install_dir),"BLAST query/options error")
+            #                        ]
             print("RMBlast installed: {}".format(rmblast))
 
 
@@ -149,7 +149,7 @@ class Install():
                 sp.call("conda install -y tandemrepeatfinder",
                         shell = True,  stdout=out_file, stderr = err_file)
 
-                
+
 
             def RMBlast():
 
