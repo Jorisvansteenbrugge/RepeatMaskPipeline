@@ -1,7 +1,7 @@
 
 
 class Install():
-    """Installation class for pipeline dependenciesself.
+    """Installation class for pipeline dependencies.
         This class does its best job to detect if dependencies are already installed
         in the provided path, and if not, to install them.
     """
@@ -13,7 +13,45 @@ class Install():
             Keyword Arguments:
                 options -- argparse opject containing the command line arguments
         """
-        print('veryifying the install is currently not supported')
+        print('veryifying the installation is currently in development, don\'t expect good results')
+
+
+        def All(options):
+            print("UNSUPPORTED -> use RepeatModeler")
+
+        def Verify_RepeatModeler(options):
+            """Verify the installation of the RepeatModler program and its dependencies
+
+                While some programs are very easy to verify (RECON, RepeatScout, etc.),
+                other programs such as RepeatMasker & RepeatModler have a -sigh- suboptimal design, making the validation
+                important and less straightforward.
+            """
+
+
+            recon = verify_installation('edgeredef', 'usage')
+            print("RECON installed: {}".format(recon))
+
+            repeatscout = False not in [verify_installation('build_lmer_table', "Usage"),
+                                        verify_installation("RepeatScout", "RepeatScout Version 1.0.5")
+                                       ]
+            print("RepeatScout installed: {}".format(repeatscout))
+
+            trf = verify_installation('trf409.linux64', 'Please use:')
+            print("TandemRepeatFinder installed: {}".format(trf))
+
+
+            rmblast = False not in [verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error'),
+                                    verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/rmblastn'.format(options.install_dir),"BLAST query/options error")
+                                    ]
+            print("RMBlast installed: {}".format(rmblast))
+
+
+
+        possibilities = {"all": All,
+                        "RepeatModeler": Verify_RepeatModeler}
+        prog_choice = options.check_prog
+
+        possibilities[prog_choice](options)
 
 
 
@@ -363,6 +401,10 @@ class Install():
         #RNAmmer()
         #Maker2()
         #Braker2()
+
+
+
+
 
 
 
