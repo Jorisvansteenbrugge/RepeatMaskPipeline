@@ -149,7 +149,7 @@ class Install():
                 sp.call("conda install -y tandemrepeatfinder",
                         shell = True,  stdout=out_file, stderr = err_file)
 
-                )
+                
 
             def RMBlast():
 
