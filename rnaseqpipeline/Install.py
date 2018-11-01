@@ -27,24 +27,66 @@ class Install():
                 important and less straightforward.
             """
 
+            out_file = open("{}/out.log".format(options.install_dir), 'w') # logging standard output
+            err_file = open("{}/err.log".format(options.install_dir), 'w') # Logging standeard error
+
 
             recon = verify_installation('edgeredef', 'usage')
-            print("RECON installed: {}".format(recon))
+            msg   = "RECON installed: {}".format(recon)
+            if recon: print_pass(msg)
+            else:     print_fail(msg)
+
 
             repeatscout = False not in [verify_installation('build_lmer_table', "Usage"),
                                         verify_installation("RepeatScout", "RepeatScout Version 1.0.5")
                                        ]
-            print("RepeatScout installed: {}".format(repeatscout))
+            msg = "RepeatScout installed: {}".format(repeatscout)
+            if repeatscout: print_pass(msg)
+            else:           print_fail(msg)
+
 
             trf = verify_installation('trf409.linux64', 'Please use:')
-            print("TandemRepeatFinder installed: {}".format(trf))
+            msg = "TandemRepeatFinder installed: {}".format(trf)
+            if trf: print_pass(msg)
+            else:   print_fail(msg)
 
 
-            # TODO: options.install_dir is not available in this namespace
-            #rmblast = False not in [verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error'),
-            #                        verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/rmblastn'.format(options.install_dir),"BLAST query/options error")
-            #                        ]
-            #print("RMBlast installed: {}".format(rmblast))
+
+            rmblast = False not in [verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/blastn'.format(options.install_dir), 'BLAST query/options error'),
+                                   verify_installation('{0}/ncbi-blast-2.6.0+-src/bin/rmblastn'.format(options.install_dir),"BLAST query/options error")
+                                   ]
+
+            msg = "RMBlast installed: {}".format(rmblast)
+            if rmblast: print_pass(msg)
+            else:       print_fail(msg)
+
+            repeatmasker_install = verify_installation('RepeatMasker', 'RepeatMasker version')
+            msg = "RepeatMasker installed: {}".format(repeatmasker_install)
+            if repeatmasker_install:
+                print_pass(msg)
+
+                repeatmasker_config_interpreter_cmd  = 'head -n1 {}/RepeatMasker/RepeatMasker'.format(options.install_dir)
+
+                if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
+
+                    print_warn("RepeatMasker is trying to use a wrong (non-existing) perl interpreter. I will now try to fix it..")
+
+                    sp.call("cd {}/RepeatMasker/; for file in *;do sed -i \"s+\#\!/u1/local/bin/perl+$(which perl)+g\" $file; done",
+                            shell = True, stderr = err_file, stdout = out_file)
+                    if verify_installation(repeatmasker_config_interpreter_cmd, "#!/u1/local/bin/perl"):
+                        print_fail("I wasn't able to fix it automatically, please manually run the configure script: {}/RepeatMasker/configure".format(options.install_dir))
+                    else:
+                        print_pass("RepeatMasker is now using the right perl interpreter")
+
+                else:
+                    print_pass("RepeatMasker is using the right perl interpreter")
+
+            else:
+                print_fail(msg)
+                print_warn("I will work on a fix for this in a future release of the pipeline (perl libraries etc....)")
+
+
+
 
 
 
@@ -424,5 +466,13 @@ def verify_installation(command, required_out):
 
 
 import sys
+def print_fail(message, end = '\n'):
+    sys.stderr.write('\x1b[1;31m' + message.strip() + '\x1b[0m' + end)
+
+
 def print_pass(message, end = '\n'):
     sys.stdout.write('\x1b[1;32m' + message.strip() + '\x1b[0m' + end)
+
+
+def print_warn(message, end = '\n'):
+    sys.stderr.write('\x1b[1;33m' + message.strip() + '\x1b[0m' + end)

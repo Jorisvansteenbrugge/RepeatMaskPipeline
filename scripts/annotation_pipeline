@@ -29,6 +29,10 @@ def arguments():
 
     install_check_parser = installation_sub_parser.add_parser('check',
                                                 help = 'Verify the installation of the full pipeline')
+    install_check_parser.add_argument("--dir", dest='install_dir',
+                                      help = '''The installation parent directory (the same one that is used during the installation) of the pipeline dependencies.''',
+                                      required = True)
+                                      
     install_check_parser.add_argument('--prog', dest= 'check_prog',
                                         help = '''Check if <prog> and it's dependencies are installed correctly, and are in the environment.
                                         While some programs are very easy to verify (RECON, RepeatScout, etc.),
