@@ -100,6 +100,7 @@ class Install():
 
         possibilities[prog_choice](options)
 
+        return
 
 
 
