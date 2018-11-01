@@ -73,7 +73,7 @@ class Install():
                     print('    Skipping RepeatScout (already installed)...')
                     return
 
-                print("    Installing RepeatScout")
+                print("    Installing RepeatScout...")
 
                 recon_url = 'http://www.repeatmasker.org/RepeatScout-1.0.5.tar.gz'
                 download_cmd = 'wget {0} -O {1}/RepeatScout.tar.gz; cd {1}; tar xf RepeatScout.tar.gz;'.format(
@@ -100,6 +100,7 @@ class Install():
                     print('    Skipping TandemRepeatFinder (already installed)')
                     return
 
+                print("    Installing TendemRepeatFinder...")
                 conda_channel = "conda config --add channels {}"
                 sp.call(conda_channel.format('bioconda'),
                         shell = True,  stdout=out_file, stderr = err_file)
@@ -110,7 +111,7 @@ class Install():
                 sp.call("conda install -y tandemrepeatfinder",
                         shell = True,  stdout=out_file, stderr = err_file)
 
-                print("    TendemRepeatFinder installation complete")
+                )
 
             def RMBlast():
 
@@ -120,6 +121,7 @@ class Install():
                     print("    Skipping RMBlast (already installed)")
                     return
 
+                print("    Installing RMBlast...")
                 sp.call("conda install -y gnutls",
                     shell = True, stdout = out_file, stderr = err_file)
 
