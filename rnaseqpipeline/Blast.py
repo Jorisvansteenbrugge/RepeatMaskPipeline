@@ -51,14 +51,13 @@ def filter_records(no_hit_ids, records):
 
 def blast(record, blast_type, database = 'nr', remote = "-remote"):
     """Do a blast search and return wether a significant hit was found
-
     """
     if remote == '-remote':
         wait_time = random.randint(1, 10)
         time.sleep(wait_time) # Make sure we don't spam the NCBI servers all at once
 
 
-    blast_cmd = "{0} -db {1} {2} -query - ".format(blast_type, database, remote)
+    blast_cmd = "{0} -db {1} {2} -evalue 10e-5 -query - ".format(blast_type, database, remote)
     print(blast_cmd)
     p = sp.Popen(blast_cmd, stdin = sp.PIPE, stdout = sp.PIPE, stderr = sp.PIPE, shell = True)
     blast_out, err = p.communicate(input=str(record.seq).encode())

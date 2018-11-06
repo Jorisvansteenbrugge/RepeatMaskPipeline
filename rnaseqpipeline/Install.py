@@ -387,6 +387,14 @@ class Install():
                 shell = True)
 
 
+            sp.call("cd {0}/rnammer; sed -i \"s+hmmsearchBIN+$(which hmmsearch)+g\" {0}/rnammer ".format(options.install_dir),
+                shell = True)
+            sp.call("cd {0}/rnammer; sed -i \"s+PERLBIN+$(which perl)+g\" {0}/rnammer ".format(options.install_dir),
+                shell = True)
+            sp.call("cd {0}/rnammer; sed -i \"s+PERLBIN+$(which perl)+g\" {0}/core-rnammer ".format(options.install_dir),
+                shell = True)
+
+
             sp.call("echo \'# rnammer installation dir\' >> ~/.bashrc; echo \'export PATH={}/rnammer:$PATH\' >> ~/.bashrc".format(
                 options.install_dir
             ),
