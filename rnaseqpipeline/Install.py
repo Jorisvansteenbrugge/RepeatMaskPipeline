@@ -404,23 +404,39 @@ class Install():
             sp.call("conda install -y tandemrepeatfinder -c bioconda",
                     shell = True,  stdout=out_file, stderr = err_file)
 
+        def tRNAscan():
+
+            if verify_installation("trnascan-1.4 -h", "trnascan: scan a sequence for tRNAs"):
+                print("Skipping tRNAscan-se (Already installed)")
+                return
+
+            print ("Installing tRNAscan-se")
+            sp.call("cd {}; wget http://trna.ucsc.edu/software/trnascan-se-2.0.0.tar.gz; tar xf trnascan-se-2.0.0.tar.gz;".format(options.install_dir),
+                shell = True, stdout = out_file, stderr = err_file)
+            sp.call("cd {}/tRNAscan-SE-2.0; ./configure; make".format(options.install_dir),
+                shell = True, stdout = out_file, stderr = err_file)
+
+            sp.call("echo \'# tRNAscan-se installation dir\' >> ~/.bashrc; echo \'export PATH={}/tRNAscan-SE-2.0/bin:$PATH\' >> ~/.bashrc".format(
+                options.install_dir
+            ),
+                shell = True,  stdout=out_file, stderr = err_file)
 
         def Maker2():
             if verify_installation('maker', 'ERROR: Control files not found'):
                 print("Skipping Maker (Already installed)")
                 return
 
-            print_pass("Installing Maker2")
+            print_pass("Installing Maker2 is not supported at this time")
 
-            conda_channel = "conda config --add channels {}"
-            sp.call(conda_channel.format('bioconda'),
-                    shell = True,  stdout=out_file, stderr = err_file)
-            sp.call(conda_channel.format('conda-forge'),
-                    shell = True,  stdout=out_file, stderr = err_file)
-            sp.call(conda_channel.format('WURnematology'),
-                    shell = True,  stdout=out_file, stderr = err_file)
-            sp.call("conda install -y maker",
-                    shell = True,  stdout=out_file, stderr = err_file)
+            # conda_channel = "conda config --add channels {}"
+            # sp.call(conda_channel.format('bioconda'),
+            #         shell = True,  stdout=out_file, stderr = err_file)
+            # sp.call(conda_channel.format('conda-forge'),
+            #         shell = True,  stdout=out_file, stderr = err_file)
+            # sp.call(conda_channel.format('WURnematology'),
+            #         shell = True,  stdout=out_file, stderr = err_file)
+            # sp.call("conda install -y maker",
+            #         shell = True,  stdout=out_file, stderr = err_file)
 
 
         def Braker2():
