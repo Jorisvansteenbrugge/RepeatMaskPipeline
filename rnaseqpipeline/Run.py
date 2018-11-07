@@ -7,7 +7,8 @@ class Run():
 
 
         func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM,
-                         blastRetro, RepeatMasker, rnammer, infernalRfam]
+                         blastRetro, RepeatMasker, rnammer, infernalRfam,
+                         tRNAscan]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
@@ -37,6 +38,7 @@ def lookup_progress(options):
                     "RepeatMasker"  : 6,
                     "rnammer"       : 7,
                     "infernalRfam"  : 8,
+                    "tRNAscan"      : 9,
                    }
 
     global progress_file_path
@@ -205,6 +207,9 @@ def rnammer(options):
     call_sp(prep_cmd)
     sp.call(rnammer_cmd)
 
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("rnammer\t1\n")
+
 def infernalRfam():
     download_cmd = "mkdir {0}/infernalRfam; cd {0}/infernalRfam; wget ftp://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.cm.gz; gunzip Rfam.cm.gz; wget ftp://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.clanin".format(
         options.workdir)
@@ -215,3 +220,11 @@ def infernalRfam():
 
     cmscan_cmd    = "cd {}/infernalRfam; cmscan --rfam --cut_ga --nohmmonly --tblout genome.tblout --fmt 2 --cpu {} --clanin Rfam.clanin Rfam.cm genome_rfam.fa 2>&1 |tee cmscan.output".format(options.workdir,options.n_threads)
     call_sp(cmscan_cmd)
+
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("infernalRfam\t1\n")
+
+def tRNAscan():
+    cmd = "cd {}; mkdir tRNAscan; tRNAscan -o tRNAscan/genome.masked.tRNAscan.out genome.fa.masked 2>&1 | tee tRNAscan/tRNAscan-SE.stdout".format(options.workdir)
+
+    call_sp(cmd)
