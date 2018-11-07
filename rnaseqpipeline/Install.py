@@ -406,14 +406,14 @@ class Install():
 
         def tRNAscan():
 
-            if verify_installation("trnascan-1.4 -h", "trnascan: scan a sequence for tRNAs"):
+            if verify_installation("tRNAscan-SE", "Usage: tRNAscan-SE [-options] <FASTA file(s)>"):
                 print("Skipping tRNAscan-se (Already installed)")
                 return
 
             print ("Installing tRNAscan-se")
-            sp.call("cd {}; wget http://trna.ucsc.edu/software/trnascan-se-2.0.0.tar.gz; tar xf trnascan-se-2.0.0.tar.gz;".format(options.install_dir),
+            sp.call("cd /tmp; wget http://trna.ucsc.edu/software/trnascan-se-2.0.0.tar.gz; tar xf trnascan-se-2.0.0.tar.gz; mkdir {}/tRNAscan".format(options.install_dir),
                 shell = True, stdout = out_file, stderr = err_file)
-            sp.call("cd {}/tRNAscan-SE-2.0; ./configure; make".format(options.install_dir),
+            sp.call("cd /tmp/tRNAscan-SE-2.0; ./configure --prefix={}/tRNAscan; make; make install".format(options.install_dir),
                 shell = True, stdout = out_file, stderr = err_file)
 
             sp.call("echo \'# tRNAscan-se installation dir\' >> ~/.bashrc; echo \'export PATH={}/tRNAscan-SE-2.0/bin:$PATH\' >> ~/.bashrc".format(
