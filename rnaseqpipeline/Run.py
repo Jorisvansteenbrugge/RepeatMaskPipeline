@@ -210,7 +210,7 @@ def rnammer(options):
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("rnammer\t1\n")
 
-def infernalRfam():
+def infernalRfam(options):
     download_cmd = "mkdir {0}/infernalRfam; cd {0}/infernalRfam; wget ftp://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.cm.gz; gunzip Rfam.cm.gz; wget ftp://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.clanin".format(
         options.workdir)
     call_sp(download_cmd)
@@ -224,7 +224,9 @@ def infernalRfam():
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("infernalRfam\t1\n")
 
-def tRNAscan():
+def tRNAscan(options):
     cmd = "cd {}; mkdir tRNAscan; tRNAscan -o tRNAscan/genome.masked.tRNAscan.out genome.fa.masked 2>&1 | tee tRNAscan/tRNAscan-SE.stdout".format(options.workdir)
 
     call_sp(cmd)
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("tRNAscan\t1\n")
