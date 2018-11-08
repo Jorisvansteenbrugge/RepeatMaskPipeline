@@ -480,7 +480,9 @@ class Install():
                 shell = True)
 
         RepeatModeler()
-        #RNAmmer()
+        RNAmmer()
+        tRNAscan()
+
         #Maker2()
         #Braker2()
 
