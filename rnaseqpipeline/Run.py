@@ -215,10 +215,10 @@ def infernalRfam(options):
         options.workdir)
     call_sp(download_cmd)
 
-    create_db_cmd = "cd {}/infernalRfam; cmpress Rfam.cm ".format(options.workdir)
+    create_db_cmd = "cd {}/infernalRfam; cmpress Rfam.cm; ln -s ../genome.fa.masked . ".format(options.workdir)
     call_sp(create_db_cmd)
 
-    cmscan_cmd    = "cd {}/infernalRfam; cmscan --rfam --cut_ga --nohmmonly --tblout genome.tblout --fmt 2 --cpu {} --clanin Rfam.clanin Rfam.cm genome_rfam.fa 2>&1 |tee cmscan.output".format(options.workdir,options.n_threads)
+    cmscan_cmd    = "cd {}/infernalRfam; cmscan --rfam --cut_ga --nohmmonly --tblout genome.tblout --fmt 2 --cpu {} --clanin Rfam.clanin Rfam.cm genome.fa.masked 2>&1 |tee cmscan.output".format(options.workdir, options.n_threads)
     call_sp(cmscan_cmd)
 
     with open(progress_file_path, 'a') as progress_file:
