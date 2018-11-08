@@ -205,7 +205,7 @@ def rnammer(options):
 
 
     call_sp(prep_cmd)
-    sp.call(rnammer_cmd)
+    call_sp(rnammer_cmd)
 
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("rnammer\t1\n")
