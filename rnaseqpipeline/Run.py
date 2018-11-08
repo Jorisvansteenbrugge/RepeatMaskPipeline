@@ -225,7 +225,7 @@ def infernalRfam(options):
         progress_file.write("infernalRfam\t1\n")
 
 def tRNAscan(options):
-    cmd = "cd {}; mkdir tRNAscan; tRNAscan -o tRNAscan/genome.masked.tRNAscan.out genome.fa.masked 2>&1 | tee tRNAscan/tRNAscan-SE.stdout".format(options.workdir)
+    cmd = "cd {}; mkdir tRNAscan; tRNAscan-SE -o tRNAscan/genome.masked.tRNAscan.out genome.fa.masked 2>&1 | tee tRNAscan/tRNAscan-SE.stdout".format(options.workdir)
 
     call_sp(cmd)
     with open(progress_file_path, 'a') as progress_file:
