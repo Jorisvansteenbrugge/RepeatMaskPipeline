@@ -288,18 +288,23 @@ class Install():
                     shell = True,  stdout=out_file, stderr = err_file)
 
 
-                sp.call("wget -O- http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib",
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`",
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc",
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'",
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'",
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Util)'",
-                    shell = True,  stdout=out_file, stderr = err_file)
+                if options.global:
+                    sp.call("cpanm Text::Soundex", shell = True)
+                    sp.call("cpanm JSON", shell = True)
+                    sp.call("cpanm Module::Util", shell = True)
+                else:
+                    sp.call("wget -O- http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib",
+                        shell = True,  stdout=out_file, stderr = err_file)
+                    sp.call("eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`",
+                        shell = True,  stdout=out_file, stderr = err_file)
+                    sp.call("echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc",
+                        shell = True,  stdout=out_file, stderr = err_file)
+                    sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Text::Soundex)'",
+                        shell = True,  stdout=out_file, stderr = err_file)
+                    sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(JSON)'",
+                        shell = True,  stdout=out_file, stderr = err_file)
+                    sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Util)'",
+                        shell = True,  stdout=out_file, stderr = err_file)
 
             def NSEG():
                 if verify_installation('nseg', "Usage:"):
@@ -454,7 +459,24 @@ class Install():
                 sp.call("echo \'# GeneMark ET installation dir\' >> ~/.bashrc; echo \'export PATH={}/genemark:$PATH\' >> ~/.bashrc".format(options.install_dir),
                     shell = True)
 
+            def Augustus():
+
+                def bamtools():
+                    download_cmd = "cd {}; git clone git://github.com/pezmaster31/bamtools.git".format(options.install_dir)
+                    build_cmd    = "cd {0}/bamtools; mkdir build; cd build; cmake --DCMAKE_INSTALL_PREFIX={0}/bamtools ..".format(options.install_dir)
+
+                    sp.call(download_cmd, shell = True)
+                    sp.call(build_cmd,    shell = True)
+
+
+                bamtools()
+
+                download_cmd = "cd {}; git clone https://github.com/Gaius-Augustus/Augustus.git".format(options.install_dir)
+
             GeneMark()
+            Augustus()
+
+
 
             if verify_installation("braker.pl", "Pipeline for predicting genes with GeneMark-ET and AUGUSTUS"):
                 print("    Skipping Braker (Already installed)")
