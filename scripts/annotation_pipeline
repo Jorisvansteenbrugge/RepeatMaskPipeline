@@ -49,6 +49,11 @@ def arguments():
     install_pipeline_parser.add_argument("--dir", dest = 'install_dir',
                                          help = "Installation directory",
                                          required = True)
+    install_pipeline_parser.add_argument("-g", dest = "global",
+                                        help = "Install system wide",
+                                        type = bool, default = False,
+                                        required = False
+                                        )
 
     install_pipeline_parser.set_defaults(func = Install.perform_installation)
 
