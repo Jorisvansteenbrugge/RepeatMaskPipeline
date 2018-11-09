@@ -250,42 +250,41 @@ class Install():
 
 
                 print("    Installing RepeatMasker")
-                sp.call('wget -c http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz -O {}/RepeatMasker-open-4-0-7.tar.gz'.format(
+                sp.call('wget -c http://www.bioinformatics.nl/~steen176/RepeatMasker.tar.gz -O {}/RepeatMasker.tar.gz'.format(
                         options.install_dir),
                         shell = True,  stdout=out_file, stderr = err_file)
-                sp.call('cd {}; tar xf RepeatMasker-open-4-0-7.tar.gz'.format(options.install_dir),
+                sp.call('cd {}; tar xf RepeatMasker.tar.gz'.format(options.install_dir),
                         shell = True,  stdout=out_file, stderr = err_file)
 
 
-
-                sp.call('cp  {0}/RepeatMasker/RepeatMaskerConfig.tmpl {0}/RepeatMasker/RepeatMaskerConfig.pm'.format(options.install_dir),
-                    shell = True,  stdout=out_file, stderr = err_file)
+                # DEPRECATED
+                # sp.call('cp  {0}/RepeatMasker/RepeatMaskerConfig.tmpl {0}/RepeatMasker/RepeatMaskerConfig.pm'.format(options.install_dir),
+                #     shell = True,  stdout=out_file, stderr = err_file)
 
                 # Configure the program
 
                 # RMBLAST
-                sp.call("sed -i \'s,/usr/local/rmblast,{0}/ncbi-blast-2.6.0+-src/bin/,g\' {0}/RepeatMasker/RepeatMaskerConfig.pm ".format(options.install_dir),
-                    shell = True,  stdout=out_file, stderr = err_file)
-                sp.call("sed -i 's,$DEFAULT_SEARCH_ENGINE = \"crossmatch\";,$DEFAULT_SEARCH_ENGINE = \"ncbi\";,g' tools/RepeatMasker/RepeatMaskerConfig.pm",
-                    shell = True,  stdout=out_file, stderr = err_file)
-
-                sp.call('sed -i "s,$TRF_PRGM = \"\";,$TRF_PRGM = \"$(which trf409.linux64)\";,g" tools/RepeatMasker/RepeatMaskerConfig.pm',
+                sp.call("sed -i \'s,INSTALLDIR,{0},g\' {0}/RepeatMasker/RepeatMaskerConfig.pm ".format(options.install_dir),
                     shell = True,  stdout=out_file, stderr = err_file)
 
 
-                sp.call('cd {}/RepeatMasker ; for i in *; do sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" $i; done'.format(options.install_dir),
-                    shell = True, stdout = out_file, stderr = err_file)
-
-                # Configure rmbblast databases
-                sp.call('cd {}; ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype nucl -in RepeatMasker/Libraries/RepeatMasker.lib'.format(options.install_dir),
-                    shell = True, stdout = out_file, stderr = err_file)
-                sp.call('cd {}; ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype prot -in RepeatMasker/Libraries/RepeatPeps.lib'.format(options.install_dir),
-                    shell = True, stdout = out_file, stderr = err_file)
-
-                sp.call("echo \'# RepeatMasker install dir\' >> ~/.bashrc ; echo \'export PATH={}/RepeatMasker:$PATH\' >> ~/.bashrc".format(
-                    options.install_dir
-                ),
+                sp.call('sed -i "s,CONDABIN,$(which conda),g" tools/RepeatMasker/RepeatMaskerConfig.pm',
                     shell = True,  stdout=out_file, stderr = err_file)
+
+
+                # sp.call('cd {}/RepeatMasker ; for i in *; do sed -i "s,\#\!/u1/local/bin/perl,\#\!$(which perl),g" $i; done'.format(options.install_dir),
+                #     shell = True, stdout = out_file, stderr = err_file)
+
+                # Configure rmbblast databases DEPRECATED
+                # sp.call('cd {}; ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype nucl -in RepeatMasker/Libraries/RepeatMasker.lib'.format(options.install_dir),
+                #     shell = True, stdout = out_file, stderr = err_file)
+                # sp.call('cd {}; ncbi-blast-2.6.0+-src/bin/makeblastdb -dbtype prot -in RepeatMasker/Libraries/RepeatPeps.lib'.format(options.install_dir),
+                #     shell = True, stdout = out_file, stderr = err_file)
+                #
+                # sp.call("echo \'# RepeatMasker install dir\' >> ~/.bashrc ; echo \'export PATH={}/RepeatMasker:$PATH\' >> ~/.bashrc".format(
+                #     options.install_dir
+                # ),
+                #     shell = True,  stdout=out_file, stderr = err_file)
 
 
                 if options.global_install:
