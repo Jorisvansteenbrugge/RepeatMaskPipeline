@@ -381,8 +381,12 @@ class Install():
 
             print_pass("Installing RNAmmer")
 
-            sp.call("cp /home/steen176/tools/dontmove/rnammer.tar.gz {0}; cd {0}; tar xf rnammer.tar.gz".format(options.install_dir),
-                shell = True, stdout = out_file, stderr = err_file)
+            if options.global_install:
+                sp.call("cd {0}; wget http://www.bioinformatics.nl/~steen176/rna/rnammer.tar.gz; tar xf rnammer.tar.gz".format(options.install_dir),
+                    shell = True)
+            else:
+                sp.call("cp /home/steen176/tools/dontmove/rnammer.tar.gz {0}; cd {0}; tar xf rnammer.tar.gz".format(options.install_dir),
+                    shell = True, stdout = out_file, stderr = err_file)
 
 
             #sed_cmd = "sed -i 's+$path = \"\";+$path = {0}/RECON-1.08/bin+g' {0}/RECON-1.08/scripts/recon.pl".format(
@@ -405,7 +409,12 @@ class Install():
             ),
                 shell = True,  stdout=out_file, stderr = err_file)
 
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Getopt::Long)'", shell = True)
+
+            if options.global_install:
+                sp.call("cpanm Getopt::Long")
+            else:
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Getopt::Long)'", shell = True)
+
             sp.call("conda install -y tandemrepeatfinder -c bioconda",
                     shell = True,  stdout=out_file, stderr = err_file)
 
