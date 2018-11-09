@@ -288,7 +288,7 @@ class Install():
                     shell = True,  stdout=out_file, stderr = err_file)
 
 
-                if options.global:
+                if options.global_install:
                     sp.call("cpanm Text::Soundex", shell = True)
                     sp.call("cpanm JSON", shell = True)
                     sp.call("cpanm Module::Util", shell = True)
