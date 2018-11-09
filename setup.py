@@ -3,7 +3,7 @@ from os import path
 
 setup(
         name             = "AnnotationPipeline",
-        version          = "0.6",
+        version          = "0.7",
         author           = "Joris van Steenbrugge",
         author_email     = "joris.vansteenbrugge@wur.nl",
         packages         = find_packages(),
