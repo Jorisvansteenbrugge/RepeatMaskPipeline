@@ -7,7 +7,8 @@ class Run():
 
 
         func_sequence = [RepeatModeler, blastPrep, blastNR, blastRFAM,
-                         blastRetro, RepeatMasker, rnammer]
+                         blastRetro, RepeatMasker, rnammer, infernalRfam,
+                         tRNAscan]
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
@@ -36,6 +37,8 @@ def lookup_progress(options):
                     "BlastRetro"    : 5,
                     "RepeatMasker"  : 6,
                     "rnammer"       : 7,
+                    "infernalRfam"  : 8,
+                    "tRNAscan"      : 9,
                    }
 
     global progress_file_path
@@ -202,4 +205,28 @@ def rnammer(options):
 
 
     call_sp(prep_cmd)
-    sp.call(rnammer_cmd)
+    call_sp(rnammer_cmd)
+
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("rnammer\t1\n")
+
+def infernalRfam(options):
+    download_cmd = "mkdir {0}/infernalRfam; cd {0}/infernalRfam; wget ftp://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.cm.gz; gunzip Rfam.cm.gz; wget ftp://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.clanin".format(
+        options.workdir)
+    call_sp(download_cmd)
+
+    create_db_cmd = "cd {}/infernalRfam; cmpress Rfam.cm; ln -s ../genome.fa.masked . ".format(options.workdir)
+    call_sp(create_db_cmd)
+
+    cmscan_cmd    = "cd {}/infernalRfam; cmscan --rfam --cut_ga --nohmmonly --tblout genome.tblout --fmt 2 --cpu {} --clanin Rfam.clanin Rfam.cm genome.fa.masked 2>&1 |tee cmscan.output".format(options.workdir, options.n_threads)
+    call_sp(cmscan_cmd)
+
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("infernalRfam\t1\n")
+
+def tRNAscan(options):
+    cmd = "cd {}; mkdir tRNAscan; tRNAscan-SE -o tRNAscan/genome.masked.tRNAscan.out genome.fa.masked 2>&1 | tee tRNAscan/tRNAscan-SE.stdout".format(options.workdir)
+
+    call_sp(cmd)
+    with open(progress_file_path, 'a') as progress_file:
+        progress_file.write("tRNAscan\t1\n")

@@ -32,7 +32,7 @@ def arguments():
     install_check_parser.add_argument("--dir", dest='install_dir',
                                       help = '''The installation parent directory (the same one that is used during the installation) of the pipeline dependencies.''',
                                       required = True)
-                                      
+
     install_check_parser.add_argument('--prog', dest= 'check_prog',
                                         help = '''Check if <prog> and it's dependencies are installed correctly, and are in the environment.
                                         While some programs are very easy to verify (RECON, RepeatScout, etc.),
@@ -70,6 +70,8 @@ def arguments():
                                     required = True)
     running_all_parser.add_argument('-p', dest = "n_threads", help = "The number of CPU threads to use",
                                     required = False, default = 4, type = int)
+    running_all_parser.add_argument('-d', dest = 'database', help = "Location of a local NCBI nucleotide database",
+                                    required = False, default = None)
 
 
 
