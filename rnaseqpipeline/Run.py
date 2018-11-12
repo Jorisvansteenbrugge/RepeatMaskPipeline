@@ -207,6 +207,11 @@ def rnammer(options):
     call_sp(prep_cmd)
     call_sp(rnammer_cmd)
 
+
+    # preparing softmasking
+    call_sp("cat {0}/rnammer/genome.masked.rnammer.gff | grep -v \"^#\" |cut -f 3,4,5 >> {0}/maskingfile.txt".format(options.workdir))         
+
+
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("rnammer\t1\n")
 

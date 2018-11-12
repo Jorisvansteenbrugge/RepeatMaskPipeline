@@ -391,15 +391,15 @@ class Install():
             #sed_cmd = "sed -i 's+$path = \"\";+$path = {0}/RECON-1.08/bin+g' {0}/RECON-1.08/scripts/recon.pl".format(
             #    options.install_dir)
 
-            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/rnammer+g\" {0}/rnammer ".format(options.install_dir),
+            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/rnammer+g\" rnammer ".format(options.install_dir),
                 shell = True)
 
 
-            sp.call("cd {0}/rnammer; sed -i \"s+hmmsearchBIN+$(which hmmsearch)+g\" {0}/rnammer ".format(options.install_dir),
+            sp.call("cd {0}/rnammer; sed -i \"s+hmmsearchBIN+$(which hmmsearch)+g\" rnammer ".format(options.install_dir),
                 shell = True)
-            sp.call("cd {0}/rnammer; sed -i \"s+PERLBIN+$(which perl)+g\" {0}/rnammer ".format(options.install_dir),
+            sp.call("cd {0}/rnammer; sed -i \"s+PERLBIN+$(which perl)+g\" rnammer ".format(options.install_dir),
                 shell = True)
-            sp.call("cd {0}/rnammer; sed -i \"s+PERLBIN+$(which perl)+g\" {0}/core-rnammer ".format(options.install_dir),
+            sp.call("cd {0}/rnammer; sed -i \"s+PERLBIN+$(which perl)+g\" core-rnammer ".format(options.install_dir),
                 shell = True)
 
 
@@ -441,15 +441,7 @@ class Install():
 
             print_pass("Installing Maker2 is not supported at this time")
 
-            # conda_channel = "conda config --add channels {}"
-            # sp.call(conda_channel.format('bioconda'),
-            #         shell = True,  stdout=out_file, stderr = err_file)
-            # sp.call(conda_channel.format('conda-forge'),
-            #         shell = True,  stdout=out_file, stderr = err_file)
-            # sp.call(conda_channel.format('WURnematology'),
-            #         shell = True,  stdout=out_file, stderr = err_file)
-            # sp.call("conda install -y maker",
-            #         shell = True,  stdout=out_file, stderr = err_file)
+
 
 
         def Braker2():
