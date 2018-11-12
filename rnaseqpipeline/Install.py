@@ -532,7 +532,7 @@ class Install():
         tRNAscan()
 
         #Maker2()
-        #Braker2()
+        Braker2()
 
 
 
