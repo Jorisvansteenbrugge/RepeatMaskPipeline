@@ -411,6 +411,7 @@ class Install():
 
             if options.global_install:
                 sp.call("cpanm Getopt::Long", shell = True)
+                sp.call("cpanm XML::Simple", shell = True)
             else:
                 sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Getopt::Long)'", shell = True)
 
