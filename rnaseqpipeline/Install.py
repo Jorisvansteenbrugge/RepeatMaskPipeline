@@ -483,6 +483,8 @@ class Install():
 
                 download_cmd = "cd {}; git clone https://github.com/Gaius-Augustus/Augustus.git".format(options.install_dir)
 
+
+
             GeneMark()
             # AUGUSTUS installatin is moved to the Docker file instead.
             # Augustus()
@@ -493,23 +495,36 @@ class Install():
                 print("    Skipping Braker (Already installed)")
 
             #Actual installation
-            sp.call("wget http://exon.gatech.edu/Braker/BRAKER2.tar.gz -O {0}/BRAKER2.tar.gz; cd {0} tar xf BRAKER2.tar.gz".format(options.install_dir),
+            sp.call("wget https://github.com/Gaius-Augustus/BRAKER/archive/v2.1.2.tar.gz -O {0}/BRAKER2.tar.gz; cd {0} tar xf BRAKER2.tar.gz".format(options.install_dir),
                 shell = True)
 
 
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Scalar::Util::Numeric)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Spec::FUnctions)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Hash::Merge)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(List::Util)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Logger::Simple)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Load::Conditional)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Parallel::ForkManager)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(POSIX)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(YAML)'", shell = True)
-            sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which)'", shell = True)
+            if options.global_install:
+                sp.call("cpanm File::Spec::Functions",     shell = True)
+                sp.call("cpanm Hash::Merge",               shell = True)
+                sp.call("cpanm List::Util",                shell = True)
+                sp.call("cpanm Logger::Simple",            shell = True)
+                sp.call("cpanm Module::Load::Conditional", shell = True)
+                sp.call("cpanm Parallel::ForkManager",     shell = True)
+                sp.call("cpanm POSIX",                     shell = True)
+                sp.call("cpanm Scalar::Util::Numeric",     shell = True)
+                sp.call("cpanm YAML",                      shell = True)
+                sp.call("cpanm File::Which",               shell = True)
+
+            else:
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Scalar::Util::Numeric)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Spec::FUnctions)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Hash::Merge)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(List::Util)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Logger::Simple)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Module::Load::Conditional)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(Parallel::ForkManager)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(POSIX)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(YAML)'", shell = True)
+                sp.call("perl -MCPAN -Mlocal::lib -e 'CPAN::install(File::Which)'", shell = True)
 
 
-            sp.call("echo \'# BRAKER2 Installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}/BRAKER_v2.1.0\' >>  ~/.bashrc".format(options.install_dir),
+            sp.call("echo \'# BRAKER2 Installation dir\' >> ~/.bashrc; echo \'export PATH=$PATH:{}/BRAKER-2.1.2/scripts\' >>  ~/.bashrc".format(options.install_dir),
                 shell = True)
 
         RepeatModeler()
