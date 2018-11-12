@@ -452,17 +452,26 @@ class Install():
                 if verify_installation('get_sequence_from_GTF.pl', 'Usage:  <gene coordinates in GTF>  <sequence in FASTA>'):
                     print("    Skipping GeneMark (Already Installed)")
                     return
-
-
                 print("    Installing GeneMark")
-                sp.call("cp /home/steen176/tools/dontmove/genemark/gm_et_linux_64 {}/genemark".format(options.install_dir),
-                    shell = True)
+
+                if options.global_install:
+                    sp.call("wget http://www.bioinformatics.nl/~steen176/gm_et_linux_64.tar.gz -O {0}/gm_et_linux_64.tar.gz; cd {0}; tar xf gm_et_linux_64.tar.gz; mv gm_et_linux_64 genemark".format(options.install_dir),
+                        shell = True)
+                    sp.call("wget http://www.bioinformatics.nl/~steen176/.gm_key -O ~/.gm_key", shell = True)
+                else: # Remains Untested
+                    sp.call("cp /home/steen176/tools/dontmove/genemark/gm_et_linux_64 {}/genemark".format(options.install_dir),
+                        shell = True)
                 sp.call("echo \'# GeneMark ET installation dir\' >> ~/.bashrc; echo \'export PATH={}/genemark:$PATH\' >> ~/.bashrc".format(options.install_dir),
                     shell = True)
 
             def Augustus():
+                """Install AUGUSTUS (DEPRECATED)
+                """
 
                 def bamtools():
+                    """Install bamtools (DEPRECATED)
+                    """
+
                     download_cmd = "cd {}; git clone git://github.com/pezmaster31/bamtools.git".format(options.install_dir)
                     build_cmd    = "cd {0}/bamtools; mkdir build; cd build; cmake --DCMAKE_INSTALL_PREFIX={0}/bamtools ..".format(options.install_dir)
 
@@ -475,7 +484,8 @@ class Install():
                 download_cmd = "cd {}; git clone https://github.com/Gaius-Augustus/Augustus.git".format(options.install_dir)
 
             GeneMark()
-            Augustus()
+            # AUGUSTUS installatin is moved to the Docker file instead.
+            # Augustus()
 
 
 
