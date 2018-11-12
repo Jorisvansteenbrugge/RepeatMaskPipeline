@@ -391,7 +391,7 @@ class Install():
             #sed_cmd = "sed -i 's+$path = \"\";+$path = {0}/RECON-1.08/bin+g' {0}/RECON-1.08/scripts/recon.pl".format(
             #    options.install_dir)
 
-            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/rnammer+g\" rnammer ".format(options.install_dir),
+            sp.call("cd {0}/rnammer; sed -i \"s+INSTALLDIR+{0}/+g\" rnammer ".format(options.install_dir),
                 shell = True)
 
 
