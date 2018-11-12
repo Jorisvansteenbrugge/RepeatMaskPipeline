@@ -12,7 +12,6 @@ class Run():
         entry_point = lookup_progress(options)
 
         for i in range(entry_point, len(func_sequence)):
-            print(repeatmodeler_dir)
             func = func_sequence[i]
             func(options)
 
@@ -51,7 +50,6 @@ def lookup_progress(options):
             names        = [line[0] for line in file_content]
 
             if 'RepeatModeler' in names:
-                print("IN THERE")
                 repeatmodeler_dir = file_content[0][1]
             else: # RepeatModeler was not finished running
                 return 0
