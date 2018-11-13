@@ -495,7 +495,7 @@ class Install():
                 print("    Skipping Braker (Already installed)")
 
             #Actual installation
-            sp.call("wget https://github.com/Gaius-Augustus/BRAKER/archive/v2.1.2.tar.gz -O {0}/BRAKER2.tar.gz; cd {0} tar xf BRAKER2.tar.gz".format(options.install_dir),
+            sp.call("wget https://github.com/Gaius-Augustus/BRAKER/archive/v2.1.2.tar.gz -O {0}/BRAKER2.tar.gz; cd {0}; tar xf BRAKER2.tar.gz".format(options.install_dir),
                 shell = True)
 
 
