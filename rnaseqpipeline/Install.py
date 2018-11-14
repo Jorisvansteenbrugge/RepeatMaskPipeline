@@ -430,6 +430,9 @@ class Install():
             sp.call("cd /tmp/tRNAscan-SE-2.0; ./configure --prefix={}/tRNAscan; make; make install".format(options.install_dir),
                 shell = True, stdout = out_file, stderr = err_file)
 
+            sp.call("ln -s $(which cmsearch) {}/tRNAscan/bin".format(options.install_dir), shell = True, stdout = out_file, stderr = err_file)
+            sp.call("ln -s $(which cmscan) {}/tRNAscan/bin".format(options.install_dir), shell = True, stdout = out_file, stderr = err_file)
+
             sp.call("echo \'# tRNAscan-se installation dir\' >> ~/.bashrc; echo \'export PATH={}/tRNAscan/bin:$PATH\' >> ~/.bashrc".format(
                 options.install_dir
             ),

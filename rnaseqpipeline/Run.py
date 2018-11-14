@@ -224,6 +224,23 @@ def infernalRfam(options):
     cmscan_cmd    = "cd {}/infernalRfam; cmscan --rfam --cut_ga --nohmmonly --tblout genome.tblout --fmt 2 --cpu {} --clanin Rfam.clanin Rfam.cm genome.fa.masked 2>&1 |tee cmscan.output".format(options.workdir, options.n_threads)
     call_sp(cmscan_cmd)
 
+
+    # Merge output with other tools    4,
+    #call_sp("cat {0}/infernalRfam/genome.tblout |  cut -f ")
+    out_file = open("{0}/maskingfile.txt", "a")
+    with open("{}/infernalRfam/genome.tblout") as in_file:
+        #skip headers
+        in_file.readline()
+        in_file.readline()
+        for line in in_file:
+            sub_cols = [3, 9, 10]
+            line = line.split()
+            cols = [ line[i] for i in sub_cols]
+            out_file.write("\t".join(cols) + '\n')
+
+    out_file.close()
+
+    # Write progress
     with open(progress_file_path, 'a') as progress_file:
         progress_file.write("infernalRfam\t1\n")
 
