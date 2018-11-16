@@ -235,7 +235,7 @@ def infernalRfam(options):
         for line in in_file:
             sub_cols = [3, 9, 10]
             line = line.split()
-            cols = [ line[i] for i in sub_cols]
+            cols = [ line[i] for i in sub_cols ]
             out_file.write("\t".join(cols) + '\n')
 
     out_file.close()
