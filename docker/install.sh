@@ -23,26 +23,31 @@ cd /tmp/hmmer-2.3.2; ./configure --enable-threads --enable-mpi; make; make insta
 # INFERNAL
 conda install -y -c bioconda infernal=1.1.2 
 
-# samtools -> currently using the aptitute version
-#bash samtools.sh
+
 
 pip3 install AnnotationPipeline
 
 annotation_pipeline install pipeline --dir /opt -g True
 
-#apt install -y augustus \
-#       	       augustus-data \
-#	       augustus-doc \
-#	       bamtools \
-#	       libbamtools-dev \
-#	       samtools
+apt install -y bamtools \
+	       libbamtools-dev \
+#	       samtools \
+	       autoconf
+
+# Augustus and dependencies
+bash /app/augustus.sh
 
 
-
+# Augustus config path -> for braker2
+echo 'export AUGUSTUS_CONFIG_PATH=/root/Augustus/config' >> ~/.bashrc
+echo "export AUGUSTUS_BIN_PATH=/root/Augustus/bin" >> ~/.bashrc
+echo 'export AUGUSTUS_SCRIPTS_PATH=/root/Augustus/scripts' >> ~/.bashrc
 # Genome Threader -> for braker2
-cd /opt; http://genomethreader.org/distributions/gth-1.7.1-Linux_x86_64-64bit.tar.gz
+cd /opt; wget http://genomethreader.org/distributions/gth-1.7.1-Linux_x86_64-64bit.tar.gz
 cd /opt; tar xf gth-1.7.1-Linux_x86_64-64bit.tar.gz
-echo 'export PATH=$PATH:/opt/gth-1.7.1-Linux_x86_64-64bit/bin >> ~/.bashrc'
-echo 'export BSSMDIR=/opt/gth-1.7.1-Linux_x86_64-64bit/bin/bssm >> ~/.bashrc'
-echo 'export GTHDATADIR=/opt/gth-1.7.1-Linux_x86_64-64bit/bin/gthdata >> ~/.bashrc'
-echo 'export ALIGNMENT_TOOL_PATH=/opt/gth-1.7.1-Linux_x86_64-64bit/ >> ~/.bashrc'
+echo 'export PATH=$PATH:/opt/gth-1.7.1-Linux_x86_64-64bit/bin' >> ~/.bashrc
+echo 'export BSSMDIR=/opt/gth-1.7.1-Linux_x86_64-64bit/bin/bssm' >> ~/.bashrc
+echo 'export GTHDATADIR=/opt/gth-1.7.1-Linux_x86_64-64bit/bin/gthdata' >> ~/.bashrc
+echo 'export ALIGNMENT_TOOL_PATH=/opt/gth-1.7.1-Linux_x86_64-64bit/' >> ~/.bashrc
+
+
