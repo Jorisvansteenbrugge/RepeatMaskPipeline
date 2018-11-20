@@ -33,3 +33,10 @@ make
 cd /root/Augustus
 make
 make install
+
+
+# Configuration 
+echo 'export AUGUSTUS_CONFIG_PATH=/root/Augustus/config'    >> ~/.bashrc
+echo "export AUGUSTUS_BIN_PATH=/root/Augustus/bin"          >> ~/.bashrc
+echo 'export AUGUSTUS_SCRIPTS_PATH=/root/Augustus/scripts'  >> ~/.bashrc
+echo 'export PATH=$PATH:/root/Augustus/auxprogs/utrrnaseq/' >> ~/.bashrc
