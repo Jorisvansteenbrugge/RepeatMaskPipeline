@@ -26,9 +26,10 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 RUN bash /tmp/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda
 RUN echo 'export PATH=$PATH:/opt/miniconda/bin' >> ~/.bashrc
 
-RUN conda install -y -c bioconda infernal=1.1.2
+RUN /opt/miniconda/bin/conda install -y -c bioconda infernal=1.1.2
 
 # Install additionall
-
-#RUN bash /app/install.sh
-
+RUN bash /app/install.sh
+RUN bash /app/augustus.sh
+RUN bash /app/braker.sh
+RUN bash /app/maker.sh

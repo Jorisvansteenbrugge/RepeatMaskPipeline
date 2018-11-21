@@ -10,6 +10,7 @@ cd /tmp/hmmer-2.3.2; ./configure --enable-threads --enable-mpi; make; make insta
 # INFERNAL
 conda install -y -c bioconda infernal=1.1.2 
 
+
 pip3 install AnnotationPipeline
 
 annotation_pipeline install pipeline --dir /opt -g True
