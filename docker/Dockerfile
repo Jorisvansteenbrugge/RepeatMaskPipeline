@@ -32,4 +32,4 @@ RUN /opt/miniconda/bin/conda install -y -c bioconda infernal=1.1.2
 RUN bash /app/install.sh
 RUN bash /app/augustus.sh
 RUN bash /app/braker.sh
-RUN bash /app/maker.sh
+#RUN bash /app/maker.sh
