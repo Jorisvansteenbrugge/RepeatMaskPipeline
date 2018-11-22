@@ -1,2 +1,3 @@
 rnaseqpipeline.egg-info*
 rnaseqpipeline/__pycache__/
+*.pyc
