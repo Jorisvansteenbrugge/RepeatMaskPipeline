@@ -10,8 +10,11 @@ RUN apt-get install -y build-essential wget git autoconf cpanminus vim python3-p
 # Install dependencies for AUGUSTUS
 RUN apt-get install -y libboost-iostreams-dev zlib1g-dev
 RUN apt-get install -y libgsl-dev libboost-graph-dev libsuitesparse-dev liblpsolve55-dev libsqlite3-dev libmysql++-dev
-RUN apt-get install -y libbamtools-dev
+RUN apt-get install -y libbamtools-dev bamtools
 RUN apt-get install -y libboost-all-dev
+
+# Install additional dependencies for BRAKER2
+RUN apt-get install -y ncbi-blast+
 
 # Install additional dependencies for htslib and samtools
 RUN apt-get install -y libbz2-dev liblzma-dev
@@ -29,7 +32,7 @@ RUN echo 'export PATH=$PATH:/opt/miniconda/bin' >> ~/.bashrc
 RUN /opt/miniconda/bin/conda install -y -c bioconda infernal=1.1.2
 
 # Install additionall
-RUN bash /app/install.sh
 RUN bash /app/augustus.sh
 RUN bash /app/braker.sh
-#RUN bash /app/maker.sh
+RUN bash /app/install.sh
+RUN bash /app/maker.sh
