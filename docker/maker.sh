@@ -16,21 +16,24 @@ cpanm DBI
 
 # Bioperl
 cd /opt; git clone https://github.com/bioperl/bioperl-live
-echo 'export PERL5LIB=$PERL5LIB:/opt/bioperl-live >> ~/.bashrc'
+echo 'export PERL5LIB=$PERL5LIB:/opt/bioperl-live' >> ~/.bashrc
 # NCBI blast
 # should already be installed
 
 # SNAP
 wget http://korflab.ucdavis.edu/Software/snap-2013-11-29.tar.gz -O /opt/snap.tar.gz
-cd /opt; tar xf snap.tar.gz; cd snap; make
-echo 'export ZOE="/opt/snap/Zoe" >> ~/.bashrc'
-echo 'export PATH=$PATH:/opt/snap >> ~/.bashrc'
+cd /opt; tar xf snap.tar.gz; cd snap; sed -i 's/-Werror//g' Makefile;sed -i 's/-Werror//g' Zoe/Makefile; make
+echo 'export ZOE="/opt/snap/Zoe"' >> ~/.bashrc
+echo 'export PATH=$PATH:/opt/snap' >> ~/.bashrc
 
 # RepeatMasker should already be installed
+echo 'export PATH=$PATH:/opt/RepeatMasker' >> ~/.bashrc
 wget http://ftp.ebi.ac.uk/pub/software/vertebrategenomics/exonerate/exonerate-2.2.0-x86_64.tar.gz -O /opt/exonerate.tar.gz
 cd /opt; tar xf exonerate.tar.gz
-echo 'export PATH=$PATH:/opt/exonerate-2.2.0-x86_64/bin >> ~/.bashrc'
+echo 'export PATH=$PATH:/opt/exonerate-2.2.0-x86_64/bin' >> ~/.bashrc
 
 
 wget http://www.bioinformatics.nl/~steen176/tools/maker-2.31.10.tgz -O /opt/maker.tgz
 cd /opt; tar xf maker.tgz; cd maker/src; perl Build.PL; ./Build install
+
+echo 'export PATH=$PATH:/opt/maker/bin' >> ~/.bashrc 
