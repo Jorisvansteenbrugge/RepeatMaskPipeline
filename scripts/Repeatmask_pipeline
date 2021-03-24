@@ -8,12 +8,11 @@ from rnaseqpipeline.Run import Run
 
 
 def arguments():
-    p = argparse.ArgumentParser(prog= "annotation_pipeline",
+    p = argparse.ArgumentParser(prog= "Repeatmask_pipeline",
         formatter_class = argparse.RawTextHelpFormatter,
         epilog = textwrap.dedent('''\
             Authors:
-                Joris van Steenbrugge <joris.vansteenbrugge@wur.nl> - Method Implementation
-                Martijn Holterman <martijn.holterman@wur.nl> - Method
+                Joris van Steenbrugge <joris.vansteenbrugge@wur.nl>  
             '''))
 
     subparsers = p.add_subparsers(dest = 'command', help = 'Sub commands for the pipeline')
